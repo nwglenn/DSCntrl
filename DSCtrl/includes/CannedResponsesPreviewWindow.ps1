@@ -47,9 +47,8 @@ if ($includePath -eq $null) {
 
 $settingsPath = ("{0}\settings" -f (Split-path ${includePath} -parent))
 
-$Salutation.text = $toPerson
-
-$TextBlockRun.text = Get-Clipboard
+#$TextBlockRun.text = Get-Clipboard
+$TextBlockRun.text = $script:message
 
 $CopyBtn.add_click({
     $TextBlock.SelectAll()
