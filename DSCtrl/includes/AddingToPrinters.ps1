@@ -1,3 +1,5 @@
+# Creates a new window to assist with adding a user to a printer group. When a department is selected in the dropdown, 
+# it will automatically populate the printer list with printer groups in that departments OU
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [xml]$XAML = @'
 <Window
@@ -48,25 +50,33 @@ $ASURITE = $Form.FindName("ASURITE")
 
 $currentDept = $deptMenu.selectionboxitem
 
+# Generate the list of printers under the department when the department menu is closed (aka, they've selected a department)
 $deptMenu.add_DropDownClosed({
 
     $currentDept = $deptMenu.Text
 
     switch($currentDept){
         "CLS"{
+            # Clear the printer menu to re-add the printers
             $printMenu.items.Clear()
+            # Manually input the department OU
             $script:OU = "OU=P.POLY.CLS,OU=P.POLY,DC=asurite,DC=ad,DC=asu,DC=edu"
+            # Get all of the printers under the OU
             $printers = Get-ADGroup -filter {name -like "*polyprint1*"} -SearchBase $script:OU | Sort-Object | select name
             $printerList = @()
+            # Splitting some potential fluff off of the printer name (this may be able to be made more efficient and obvious)
             foreach($printer in $printers){
                 $printerSplit = $printer -split("-")
                 $printerSplitAgain = $printerSplit -split("}")
                 $printerList += $printerSplitAgain[1]
             }
+            # Sort the list of printers
             $sortedList = $printerList | Sort-Object
+            # Add each printer to the printer menu
             foreach($printer in $sortedList){
                 $printMenu.items.Add($printer)
             }
+            # We're done, break out of the switch statement
             break
         }
         "EOSS"{
@@ -153,13 +163,12 @@ $deptMenu.add_DropDownClosed({
 
 })
 
-
-
 $btnAdd.add_click({
     $ASURITEText = $ASURITE.text
     $currentPrinter = $printMenu.selectionboxitem
     $fullName = ("*polyprint1-" + $currentPrinter)
 
+    # Ensure that the ASURITE provided is an actual user
     try{
         Get-ADUser $ASURITEText -ErrorAction Stop
     }
@@ -168,6 +177,7 @@ $btnAdd.add_click({
         return
     }
 
+    # Ensure that the printer that is listed is actually a printer (this should never throw an error, but you never know)
     try{
         $printerName = Get-ADGroup -filter {name -like $fullName} -searchbase $script:OU | select name -ErrorAction Stop -ErrorVariable myError
     }
@@ -175,6 +185,7 @@ $btnAdd.add_click({
         $Global:SyncHash.print(("Unable to find the printer name. Please try again."), $false)
     }
   
+    # Attempt to add the user to the printer group
     try{
         Add-ADGroupMember -Identity $printerName.name -Members "$ASURITEText" -ErrorAction Stop -ErrorVariable myError
         $Global:SyncHash.print(("Added $asuritetext to " + $printername.name), $false)
@@ -188,5 +199,7 @@ $btnAdd.add_click({
 $btnCancel.add_click({
     $form.close()
 })
+
+$Form.Topmost = $true
 
 $Form.ShowDialog() | out-null

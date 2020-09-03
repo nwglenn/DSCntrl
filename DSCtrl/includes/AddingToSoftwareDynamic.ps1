@@ -1,3 +1,6 @@
+# Window to assist with adding a user to a software group. The techician will provide the distinguished name of the OU that contains the software groups for their area
+# Then they will click the update button, the Group dropdown will then be generated which the technician can select a group and type in a computer name, then click add
+
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [xml]$XAML = @'
 <Window

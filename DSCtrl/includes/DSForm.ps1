@@ -218,6 +218,8 @@ Title="$globalTitle" Height="660" Width="1100">
         <MenuItem Header="Generate GPO Report" Name="GPOReport" />
         <MenuItem Header="Canned Phrases" Name="CannedPhrases" />
         <MenuItem Header="Edit Properties" Name="EditProperties" />
+        <MenuItem Header="RBC" Name="RBC" />
+        <MenuItem Header="Num Groups" Name="NumGroups" />
     </MenuItem>
 </Menu>
 <ToolBarTray DockPanel.Dock="Top">
@@ -904,6 +906,27 @@ $Global:SyncHash.EditProperties.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
+$Global:SyncHash.RBC.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\rbcForm.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.NumGroups.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\NumGroups.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
 
 # Clean GPO, Computers and security groups from a selected OU
 $Global:SyncHash.CLEANOU.Add_Click({

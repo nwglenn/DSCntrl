@@ -23,9 +23,6 @@
         <Button Name="CopyBtn" Content="Copy" HorizontalAlignment="Left" Margin="22,144,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button Name="CloseBtn" Content="Close" HorizontalAlignment="Left" Margin="287,182,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="74" Height="20"/>
         <ComboBox Name="Template" HorizontalAlignment="Left" Margin="47,106,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem>Closing</ComboBoxItem>
-            <ComboBoxItem>Appointment</ComboBoxItem>
-            <ComboBoxItem>Testing</ComboBoxItem>
         </ComboBox>
         <Label Content="Type:" HorizontalAlignment="Left" Margin="10,102,0,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
         <Button Name="PreviewBtn" Content="Preview" HorizontalAlignment="Left" Margin="110,144,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="75" Height="20"/>
@@ -99,6 +96,12 @@ if ($includePath -eq $null) {
 }
 $settingsPath = ("{0}\settings" -f (Split-path ${includePath} -parent))
 
+$templateFiles = Get-ChildItem $settingsPath | select Name
+
+foreach($file in $templateFiles) {
+    $Template.items.Add(($file.name -split "\.")[0])
+}
+
 # Event for when the drop down closes to update what is currently selected
 $Template.add_DropDownCLosed({
     $script:selectedTemplate = $Template.text
@@ -119,6 +122,12 @@ $CopyBtn.add_click({
 $PreviewBtn.add_click({
     $fromPerson = $fromField.text
     $toPerson = $toField.text
+
+    $salutation = "Hi {0}," -f $toPerson
+    $body = Get-Content "$settingsPath\$script:selectedTemplate.txt"
+    $sigName = $fromPerson
+    $signature = Get-Content "$settingsPath\Signature.txt"
+
     $script:message = Build-EmailMessage -toPerson $toPerson -fromPerson $fromPerson
 
     . "${includePath}\CannedResponsesPreviewWindow.ps1"

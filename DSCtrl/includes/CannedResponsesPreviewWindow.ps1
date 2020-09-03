@@ -1,3 +1,5 @@
+# This is the window that will pop up with the preview of the email that will be sent. This box is able to be edited but currently is not then able to be re-saved.
+
 [void][System.Reflection.Assembly]::LoadWithPartialName('presentationframework')
 [xml]$XAML = @'
 <Window
@@ -18,7 +20,7 @@
         </Grid.RowDefinitions>
         <Button Name="CopyBtn" Content="Copy" HorizontalAlignment="Left" Margin="165,392,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="75" Height="20"/>
         <Button Name="CloseBtn" Content="Close" HorizontalAlignment="Left" Margin="263,392,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="75" Height="20"/>
-        <RichTextBox Name="TextBlock" HorizontalAlignment="Left" Height="362" Grid.RowSpan="2" VerticalAlignment="Top" Width="668" Margin="10,10,0,0">
+        <RichTextBox Name="TextBlock" HorizontalAlignment="Left" Height="226" Grid.RowSpan="2" VerticalAlignment="Top" Width="668" Margin="10,49,0,0">
             <FlowDocument>
                 <Paragraph>
                     <Run Name="TextBlockRun" Text="RichTextBox"/>
@@ -26,6 +28,8 @@
             </FlowDocument>
         </RichTextBox>
         <Button Name="SaveBtn" Content="Save" HorizontalAlignment="Left" Margin="449,392,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="75"/>
+        <Label Name="SalutationBox" Content="Salutation" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+        <Label Name="SignatureBox" Content="Signature" HorizontalAlignment="Left" Margin="10,280,0,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
     </Grid>
 </Window>
 '@
