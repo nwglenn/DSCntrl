@@ -220,6 +220,7 @@ Title="$globalTitle" Height="660" Width="1100">
         <MenuItem Header="Edit Properties" Name="EditProperties" />
         <MenuItem Header="RBC" Name="RBC" />
         <MenuItem Header="Num Groups" Name="NumGroups" />
+        <MenuItem Header="subTest" Name="TestMenuItem" />
     </MenuItem>
 </Menu>
 <ToolBarTray DockPanel.Dock="Top">
@@ -911,6 +912,18 @@ $Global:SyncHash.RBC.Add_Click({
         . "${includePath}\global.ps1"
         Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
         . "${includePath}\rbcForm.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.TestMenuItem.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        $global:SyncHash.print("Hello World!", $false) 
+        . "${includePath}\insertfilehere.ps1"
     }
     $PStask = [powershell]::Create().AddScript($Code)
     $PStask.Runspace = $Runspace
