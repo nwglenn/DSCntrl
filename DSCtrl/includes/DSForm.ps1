@@ -217,10 +217,7 @@ Title="$globalTitle" Height="660" Width="1100">
         <MenuItem Header="PSRemote" Name="PSRemote" />
         <MenuItem Header="Generate GPO Report" Name="GPOReport" />
         <MenuItem Header="Canned Phrases" Name="CannedPhrases" />
-        <MenuItem Header="Edit Properties" Name="EditProperties" />
-        <MenuItem Header="RBC" Name="RBC" />
         <MenuItem Header="Num Groups" Name="NumGroups" />
-        <MenuItem Header="subTest" Name="TestMenuItem" />
     </MenuItem>
 </Menu>
 <ToolBarTray DockPanel.Dock="Top">
