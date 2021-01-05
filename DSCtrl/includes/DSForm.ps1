@@ -893,39 +893,39 @@ $Global:SyncHash.CannedPhrases.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
-$Global:SyncHash.EditProperties.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\Get-ADComputerProperties.ps1"
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
+# $Global:SyncHash.EditProperties.Add_Click({
+#     $code = {
+#         . "${includePath}\global.ps1"
+#         Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+#         . "${includePath}\Get-ADComputerProperties.ps1"
+#     }
+#     $PStask = [powershell]::Create().AddScript($Code)
+#     $PStask.Runspace = $Runspace
+#     $myJob = $PStask.BeginInvoke()
+# })
 
-$Global:SyncHash.RBC.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\rbcForm.ps1"
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
+# $Global:SyncHash.RBC.Add_Click({
+#     $code = {
+#         . "${includePath}\global.ps1"
+#         Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+#         . "${includePath}\rbcForm.ps1"
+#     }
+#     $PStask = [powershell]::Create().AddScript($Code)
+#     $PStask.Runspace = $Runspace
+#     $myJob = $PStask.BeginInvoke()
+# })
 
-$Global:SyncHash.TestMenuItem.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        $global:SyncHash.print("Hello World!", $false) 
-        . "${includePath}\insertfilehere.ps1"
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
+# $Global:SyncHash.TestMenuItem.Add_Click({
+#     $code = {
+#         . "${includePath}\global.ps1"
+#         Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+#         $global:SyncHash.print("Hello World!", $false) 
+#         . "${includePath}\insertfilehere.ps1"
+#     }
+#     $PStask = [powershell]::Create().AddScript($Code)
+#     $PStask.Runspace = $Runspace
+#     $myJob = $PStask.BeginInvoke()
+# })
 
 $Global:SyncHash.NumGroups.Add_Click({
     $code = {

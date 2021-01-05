@@ -218,6 +218,7 @@ class FSTreeNode {
 
                 if ($accessStr.length -eq 0) {
                     $accessStr = 'Inherited'
+                    return $null
                 }
                 
             } else {
@@ -272,8 +273,8 @@ class FSTreeNode {
     .NOTES
     To specify a higher verbosity level, call the overloaded function with an integer
     #>
-    [string]ToHTML() {
-        return $this.ToHTML(0)
+    [string]ToHTML($includeEmpty) {
+        return $this.ToHTML($includeEmpty, 0)
     }
 
     <#
@@ -284,7 +285,7 @@ class FSTreeNode {
     0 = Only display containers and related information
     1 = Display containers and files
     #>
-    [String]ToHTML([int]$verbosity) {
+    [String]ToHTML($includeEmpty, [int]$verbosity) {
         $returnString = ''
 
         # Add headers if root node
@@ -398,101 +399,114 @@ $returnString += "</p><br /><p><b>Legend:</b><br />&nbsp;&nbsp;<b>c</b> = Create
         # Generate HTML based on node type
         if ($this.isContainer) {
 
-            # Add permissions information to container header
-            if ($null -ne $this.acl) {
+            if($includeEmpty -eq $false -and $this.accessError -eq $true){
+                # If the "Include Empty" box is not ticked (so exclude empty folders), and there is nothing in the folder: Do nothing for now
 
-                # Build string for errors and warnings
-                $errorHTML = ''
-                $accessHTML = ''
+                # Unsure if there is a better way for me to skip this check with the provided information. This works, but it may not be the most pretty to have an if statment doing nothing
+            }
 
-                # Count inherited ACL's to determine if inheritance is in effect
-                $inheritanceCount = $this.acl.access | Where-Object -Property 'IsInherited' -eq $true | Measure-Object
-                if ($inheritanceCount -eq 0) {
-                    $errorHTML += "<div class='warning'><b><u>Warning</u></b>: security inheritance for this object is disabled</div>"
-                }
+            else{
 
-                # Warn the user if the contents of this folder are deeper than max depth
-                if ($this.depth -eq [FSTreeNode]::maxDepth) {
-                    $errorHTML += "<div class='warning'><b><u>Warning</u></b>: The contents of this container were not scanned, because it is beyond the current maximum depth setting</div>"
-                }
+                # Add permissions information to container header
+                if ($null -ne $this.acl) {
 
-                try {
-                    $accessHTML = $this.acl.access | Where-Object -Property 'IsInherited' -eq $false | ForEach-Object {
-                        "<br />$($_.IdentityReference) $($_.AccessControlType): $($_.FileSystemRights)"
-                        if ($($_.IdentityReference) -eq 'CREATOR OWNER') {
-                            $errorHTML += "<div class='warning'><b><u>Warning</u></b>: Account CREATOR OWNER has explicit permission on folder.</div>"
-                        } elseif ($_.IdentityReference.AccountDomainSid) { 
-                            $errorHTML += "<div class='warning'><b><u>Warning</u></b>: User account ($($_.IdentityReference.value)) has explicit permission on folder.</div>"
-                        } else {
-                            $userAccount = ($_.IdentityReference.value).Split('\')
-                            if ( (-NOT $userAccount[1].Contains('.')) -and ($userAccount[1].length -le 8)) {
-                                if ($userAccount[0] -eq 'ASURITE') {
-                                    $domainServer = "asurite.ad.asu.edu"
-                                } else {
-                                    $domainServer = "ad.asu.edu"
-                                }
-                                if ($(get-ADObject -Server $domainServer -Filter "Name -eq '$($userAccount[1])'").ObjectClass -eq 'user') {
-                                    $errorHTML += "<div class='warning'><b><u>Warning</u></b>: User account ($($userAccount[1])) has explicit permission on folder.</div>"
+                    # Build string for errors and warnings
+                    $errorHTML = ''
+                    $accessHTML = ''
+
+                    # Count inherited ACL's to determine if inheritance is in effect
+                    $inheritanceCount = $this.acl.access | Where-Object -Property 'IsInherited' -eq $true | Measure-Object
+                    if ($inheritanceCount -eq 0) {
+                        $errorHTML += "<div class='warning'><b><u>Warning</u></b>: security inheritance for this object is disabled</div>"
+                    }
+
+                    # Warn the user if the contents of this folder are deeper than max depth
+                    if ($this.depth -eq [FSTreeNode]::maxDepth) {
+                        $errorHTML += "<div class='warning'><b><u>Warning</u></b>: The contents of this container were not scanned, because it is beyond the current maximum depth setting</div>"
+                    }
+
+                    try {
+                        $accessHTML = $this.acl.access | Where-Object -Property 'IsInherited' -eq $false | ForEach-Object {
+                            "<br />$($_.IdentityReference) $($_.AccessControlType): $($_.FileSystemRights)"
+                            if ($($_.IdentityReference) -eq 'CREATOR OWNER') {
+                                $errorHTML += "<div class='warning'><b><u>Warning</u></b>: Account CREATOR OWNER has explicit permission on folder.</div>"
+                            } elseif ($_.IdentityReference.AccountDomainSid) { 
+                                $errorHTML += "<div class='warning'><b><u>Warning</u></b>: User account ($($_.IdentityReference.value)) has explicit permission on folder.</div>"
+                            } else {
+                                $userAccount = ($_.IdentityReference.value).Split('\')
+                                if ( (-NOT $userAccount[1].Contains('.')) -and ($userAccount[1].length -le 8)) {
+                                    if ($userAccount[0] -eq 'ASURITE') {
+                                        $domainServer = "asurite.ad.asu.edu"
+                                    } else {
+                                        $domainServer = "ad.asu.edu"
+                                    }
+                                    if ($(get-ADObject -Server $domainServer -Filter "Name -eq '$($userAccount[1])'").ObjectClass -eq 'user') {
+                                        $errorHTML += "<div class='warning'><b><u>Warning</u></b>: User account ($($userAccount[1])) has explicit permission on folder.</div>"
+                                    }
                                 }
                             }
                         }
+                    } catch {
+                        $errorHTML += "<div class='Error'><b><u>ERROR</u></b>: Unknown problem account permission.</div>"
                     }
-                } catch {
-                    $errorHTML += "<div class='Error'><b><u>ERROR</u></b>: Unknown problem account permission.</div>"
-                }
 
-                if ($accessHTML.length -eq 0) {
-                    $accessHTML = 'Inherited'
-                }
-                $aclHTML += @"
+                    if ($accessHTML.length -eq 0) {
+                        # If the accesses are inherited just make the HTML blank, showing only the folder in a minimized formate
+                        $accessHTML = 'Inherited'
+                        $aclHTML = ""
+                    }
+                    else{
+                    $aclHTML += @"
 ${errorHTML}
 <div class='security'>
 Permissions applied to this container:
 ${accessHTML}
 </div>                
 "@
-            }
-            else {
-                $aclHTML += "<div class='error'><b><u>ERROR</u></b>: Could not read security information</div>"
-                $accessHTML = 'Error'
-            }
-
-            if ($this.depth -eq 0) {
-                $folderString += '<li class="root">'
-                $folderString += "&#128194;<b>$($this.name)</b> <font color='#808080'>[c:$($this.created)] [m:$($this.modified)] [a:$($this.accessed)] [sz:$($mySize.toString())]</font>"
-                $folderString += "</li><li>"
-            }
-            else {
-                $folderString += "<li>"
-                $folderString += "&#128194;<b>$($this.name)</b> <font color='#808080'>[c:$($this.created)] [m: $($this.modified)] [a:$($this.accessed) [sz:$($mySize.toString())]</font>"
-            }
-
-            $folderString += $aclHTML
-
-            if ($this.accessError) {
-                $folderString += "<div class='warning'><b><u>Warning</u></b>: Empty folder</div>"
-                $accessHTML = 'empty'
-            }
-            elseif ( 
-                ($this.children -is [System.Collections.ArrayList]) -and
-                ($this.children.count -gt 0)
-            ) {
-                $childString = ($this.children | Foreach-Object { $_.ToHTML($verbosity) })
-                if ($childString -ne '') {
-                    $folderString += "<ul> $childString </ul>"
-                    $accessHTML = 'Display'
+                    }
                 }
-            } 
-            
-            if ($this.depth -ne 0) {
-                $folderString += "</li>"
-            }
+                else {
+                    $aclHTML += "<div class='error'><b><u>ERROR</u></b>: Could not read security information</div>"
+                    $accessHTML = 'Error'
+                }
 
-            if (
-               ($accessHTML -ne 'Inherited') -or
-               ($this.depth -eq 0)
-             ) {
-                $returnString += $folderString
+                if ($this.depth -eq 0) {
+                    $folderString += '<li class="root">'
+                    $folderString += "&#128194;<b>$($this.name)</b> <font color='#808080'>[c:$($this.created)] [m:$($this.modified)] [a:$($this.accessed)] [sz:$($mySize.toString())]</font>"
+                    $folderString += "</li><li>"
+                }
+                else {
+                    $folderString += "<li>"
+                    $folderString += "&#128194;<b>$($this.name)</b> <font color='#808080'>[c:$($this.created)] [m: $($this.modified)] [a:$($this.accessed) [sz:$($mySize.toString())]</font>"
+                }
+
+                $folderString += $aclHTML
+
+                if ($this.accessError) {
+                    $folderString += "<div class='warning'><b><u>Warning</u></b>: Empty folder</div>"
+                    $accessHTML = 'empty'
+                }
+                elseif ( 
+                    ($this.children -is [System.Collections.ArrayList]) -and
+                    ($this.children.count -gt 0)
+                ) {
+                    $childString = ($this.children | Foreach-Object { $_.ToHTML($includeEmpty, $verbosity) })
+                    if ($childString -ne '') {
+                        $folderString += "<ul> $childString </ul>"
+                        $accessHTML = 'Display'
+                    }
+                } 
+                
+                if ($this.depth -ne 0) {
+                    $folderString += "</li>"
+                }
+
+                if (
+                ($accessHTML -ne 'Inherited') -or
+                ($this.depth -eq 0)
+                ) {
+                    $returnString += $folderString
+                }
             }
         }
         else { 
@@ -536,40 +550,41 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 Title="Share Report" Height="600" MinHeight="480" Width="1000" MinWidth="1000">
-    <DockPanel Margin="16">
-        <StackPanel Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Height="45">
-            <Button Name="btnSaveHTML" Width="100" Margin="8" IsEnabled="False">Save HTML</Button>
-            <Button Name="btnSaveCSV" Width="100" Margin="8" IsEnabled="False">Save CSV</Button>
+<DockPanel Margin="16">
+<StackPanel Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Height="45">
+    <Button Name="btnSaveHTML" Width="100" Margin="8" IsEnabled="False">Save HTML</Button>
+    <Button Name="btnSaveCSV" Width="100" Margin="8" IsEnabled="False">Save CSV</Button>
+</StackPanel>
+<StackPanel Orientation="Vertical" Margin="4" HorizontalAlignment="Left" DockPanel.Dock="Top">
+    <StackPanel Orientation="Horizontal">
+        <Label>Share path:</Label>
+        <TextBox Name="txtPath" Width="256" Margin="8,0,8,0"></TextBox>
+        <Label>Maximum search depth:</Label>
+        <TextBox Name="txtMaxDepth" TextAlignment="Right" Width="64" Margin="8,0,0,0">999</TextBox>
+        <Label>(1-999)</Label>
+        <Button Name="btnStart" Width="80">Calculate!</Button>
+        <ProgressBar Name="progress" IsIndeterminate="False" Margin="15,0,8,0" Width="200" Height="20" />
+    </StackPanel>
+    <GroupBox Header="Report on">
+        <StackPanel Orientation="Horizontal">
+            <RadioButton Name="radFolders" Margin="8" Content="Folders only" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="verbosity" IsChecked="True"/>
+            <RadioButton Name="radFoldersAndFiles" Margin="8" Content="Folders and files" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="verbosity"/>
+            <CheckBox Name="includeEmpty" Content="Include Empty Folders" Height="16" IsChecked="True"/>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Margin="4" HorizontalAlignment="Left" DockPanel.Dock="Top">
-            <StackPanel Orientation="Horizontal">
-                <Label>Share path: </Label>
-                <TextBox Name="txtPath" Width="256" Margin="8,0,8,0"></TextBox>
-                <Label>Maximum search depth: </Label>
-                <TextBox Name="txtMaxDepth" TextAlignment="Right" Width="64" Margin="8,0,0,0">999</TextBox>
-                <Label> (1-999)</Label>
-                <Button Name="btnStart" Width="80">Calculate!</Button>
-                <ProgressBar Name="progress" IsIndeterminate="False" Margin="15,0,8,0" Width="200" Height="20" />
-            </StackPanel>
-            <GroupBox Header="Report on">
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Name="radFolders" Margin="8" Content="Folders only" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="verbosity" IsChecked="True"/>
-                    <RadioButton Name="radFoldersAndFiles" Margin="8" Content="Folders and files" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="verbosity"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="File settings">
-                <StackPanel Orientation="Horizontal">
-                    <Label>Not modified and accessed over (yrs.): </Label>
-                    <TextBox Name="txtAgeOver" TextAlignment="Right" Width="45" IsEnabled="{Binding ElementName=radFoldersAndFiles, Path=IsChecked}">0</TextBox>
-                    <Label>Larger than (MB): </Label>
-                    <TextBox Name="txtsizeOver" TextAlignment="Right" Width="45" IsEnabled="{Binding ElementName=radFoldersAndFiles, Path=IsChecked}">0</TextBox>
-                </StackPanel>
-            </GroupBox>
+    </GroupBox>
+    <GroupBox Header="File settings">
+        <StackPanel Orientation="Horizontal">
+            <Label>Not modified and accessed over (yrs.):</Label>
+            <TextBox Name="txtAgeOver" TextAlignment="Right" Width="45" IsEnabled="{Binding ElementName=radFoldersAndFiles, Path=IsChecked}">0</TextBox>
+            <Label>Larger than (MB):</Label>
+            <TextBox Name="txtsizeOver" TextAlignment="Right" Width="45" IsEnabled="{Binding ElementName=radFoldersAndFiles, Path=IsChecked}">0</TextBox>
         </StackPanel>
-        <GroupBox Header="Report" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
-            <WebBrowser Name="reportView" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        </GroupBox>
-    </DockPanel>
+    </GroupBox>
+</StackPanel>
+<GroupBox Header="Report" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
+    <WebBrowser Name="reportView" HorizontalAlignment="Left" VerticalAlignment="Top" />
+</GroupBox>
+</DockPanel>
 </Window>
 "@
 
@@ -609,6 +624,7 @@ Title="Share Report" Height="600" MinHeight="480" Width="1000" MinWidth="1000">
     $Global:shareForm.add('FileTree', $null)
     $Global:shareForm.add('ageOver', 0)
     $Global:shareForm.add('sizeOver', 0)
+
 
     # Create runspace for long-running tasks
     $Runspace = [runspacefactory]::CreateRunspace()
@@ -743,7 +759,7 @@ Title="Share Report" Height="600" MinHeight="480" Width="1000" MinWidth="1000">
                         return
                     }
 
-                    $script:reportHTML = $syncHash.fileTree.ToHTML($syncHash.verbosity)
+                    $script:reportHTML = $syncHash.fileTree.ToHTML($Global:shareForm.includeEmpty.IsChecked, $syncHash.verbosity)
                     $syncHash.Window.Dispatcher.invoke(
                         [action] {
                             $syncHash.reportView.NavigateToString(@"
@@ -787,7 +803,7 @@ Title="Share Report" Height="600" MinHeight="480" Width="1000" MinWidth="1000">
                 return
             }
         
-            $global:shareForm.fileTree.toHTML($global:shareForm.verbosity) | Set-Content -Path $saveDialog.filename
+            $global:shareForm.fileTree.toHTML($Global:shareForm.includeEmpty.IsChecked, $global:shareForm.verbosity) | Set-Content -Path $saveDialog.filename
         
             # open html
             Invoke-Item $saveDialog.filename
