@@ -14,231 +14,229 @@ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:local="clr-namespace:Deskside_Control_Panel"
 mc:Ignorable="d"
 Title="$globalTitle" Height="660" Width="1100">
-<DockPanel>
-<Menu DockPanel.Dock="Top">
-    <MenuItem Header="_File">
-        <MenuItem Header="Copy log" Name="CopyLogMenuItem" />
-        <MenuItem Header="_Clear log" Name="ClearMenuItem" />
-        <Separator />
-        <MenuItem Header="_Exit" Name="exitMenuItem" />
-    </MenuItem>
-    <MenuItem Header="_Computer">
-        <MenuItem Header="Verify" Name="Verify">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Test if computer is online</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Performs a ping test using the provided computer name and returns the result in the log window</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Get Security Groups" Name="CompSecGroup">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock TextWrapping="Wrap">Returns a list of security groups the computer is a member of</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Get password" Name="LAPS">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Get LAPS password</TextBlock>
-                        <TextBlock TextWrapping="Wrap">For machines managed by the LAPS client, this function obtains the most recently configured password for the provided computer name</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Go to asset" Name="goToAsset">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Go to Service-Now asset record</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Uses your default browser to search the Service-Now asset database for the machine name you specified</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Start Bomgar session" Name="BOMGAR">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Remote support using Bomgar</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Uses the computer name provided to attempt a remote support session using Bomgar.</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-    </MenuItem>
-    <MenuItem Header="_User">
-        <MenuItem Header="Exchange DL offboarding" Name="ExDLRemoveMember">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Remove a user from managed DLs</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Remove a user account from any Exchange Distribution Lists (DLs) that you have access to manage.</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Token Calculator" Name="CalcToken">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Estimate the token size for a user account</TextBlock>
-                        <TextBlock TextWrapping="Wrap">This tool examines the group membership information for a provided user account in order to estimate the size of their token object</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-    </MenuItem>
-    <MenuItem Header="_Groups">
-        <MenuItem Header="_UTOSPA Security Groups">
-            <MenuItem Header="Create" Name="CreateSecGrp">
-                <MenuItem.ToolTip>
-                    <ToolTip>
-                        <StackPanel Width="256">
-                            <TextBlock FontWeight="Bold">Create new security group</TextBlock>
-                            <TextBlock TextWrapping="Wrap">Creates a new security group that conforms to the UTOSPA naming convention</TextBlock>
-                        </StackPanel>
-                    </ToolTip>
-                </MenuItem.ToolTip>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="Copy log" Name="CopyLogMenuItem" />
+                <MenuItem Header="_Clear log" Name="ClearMenuItem" />
+                <MenuItem Header="Example Item" Name="Example" />
+                <Separator />
+                <MenuItem Header="_Exit" Name="exitMenuItem" />
             </MenuItem>
-            <MenuItem Header="Bulk import" Name="ImportSecGrp">
-                <MenuItem.ToolTip>
-                    <ToolTip>
-                        <StackPanel Width="256">
-                            <TextBlock FontWeight="Bold">Import security groups from a migration worksheet</TextBlock>
-                            <TextBlock TextWrapping="Wrap">This tool will walk you through creating a collection of security groups from a migration worksheet.</TextBlock>
-                        </StackPanel>
-                    </ToolTip>
-                </MenuItem.ToolTip>
+            <MenuItem Header="_Computer">
+                <MenuItem Header="Ping" Name="Verify">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Test if computer is online</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Performs a ping test using the provided computer name and returns the result in the log window</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Get Security Groups" Name="CompSecGroup">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock TextWrapping="Wrap">Returns a list of security groups the computer is a member of</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Get password" Name="LAPS">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Get LAPS password</TextBlock>
+                                <TextBlock TextWrapping="Wrap">For machines managed by the LAPS client, this function obtains the most recently configured password for the provided computer name</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Go to asset" Name="goToAsset">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Go to Service-Now asset record</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Uses your default browser to search the Service-Now asset database for the machine name you specified</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Start Bomgar session" Name="BOMGAR">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Remote support using Bomgar</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Uses the computer name provided to attempt a remote support session using Bomgar.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="Bulk rename" Name="RenameSecGrp">
-                <MenuItem.ToolTip>
-                    <ToolTip>
-                        <StackPanel Width="256">
-                            <TextBlock FontWeight="Bold">Rename security groups</TextBlock>
-                            <TextBlock TextWrapping="Wrap">Use this tool when you need to rename all security groups that belong to a department or business unit within the nested security group standard.</TextBlock>
-                        </StackPanel>
-                    </ToolTip>
-                </MenuItem.ToolTip>
+            <MenuItem Header="_User">
+                <MenuItem Header="Exchange DL offboarding" Name="ExDLRemoveMember">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Remove a user from managed DLs</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Remove a user account from any Exchange Distribution Lists (DLs) that you have access to manage.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Token Calculator" Name="CalcToken">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Estimate the token size for a user account</TextBlock>
+                                <TextBlock TextWrapping="Wrap">This tool examines the group membership information for a provided user account in order to estimate the size of their token object</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
             </MenuItem>
-        </MenuItem>
-    </MenuItem>
-    <MenuItem Header="_OU">
-        <MenuItem Header="Create Saved Queries" Name="SQXML">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Create Saved Queries</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Generate XML files to import as Saved Queries into ADUC.</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Migrate GPO" Name="MIGGPO">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Migrate GPO</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Copy GPO links from an existing OU to one of the migration staging areas</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Clean computers in OU" Name="UPCOMP">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Clean Computers in OU</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Standardizes the description field of computer objects and checks for stale/unused computers</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <Separator />
-        <MenuItem Header="Prepare OU for Deletion" Name="CLEANOU">
-            <MenuItem.Icon>
-                <Image Source="$includePath/img/MS-stdlib-warning-128x128.png" />
-            </MenuItem.Icon>
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Prepare OU for Deletion</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Prepares an existing OU for retirement by offering to remove unused GPO objects, computer accounts and security groups</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-    </MenuItem>
-    <MenuItem Header="_Resources">
-        <MenuItem Header="File Share Report" Name="SHRRPT">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">File Share Report</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Collects information about a network share and generates an HTML report</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-        <MenuItem Header="Printer Report" Name="PRTRPT">
-            <MenuItem.ToolTip>
-                <ToolTip>
-                    <StackPanel Width="256">
-                        <TextBlock FontWeight="Bold">Printer Report</TextBlock>
-                        <TextBlock TextWrapping="Wrap">Collects information on specified printers and generates a report in HTML format</TextBlock>
-                    </StackPanel>
-                </ToolTip>
-            </MenuItem.ToolTip>
-        </MenuItem>
-    </MenuItem>
-    <MenuItem Header="_Help">
-        <MenuItem Header="Open AD Standard KB article" Name="kbADSTD" />
-        <MenuItem Header="Open DSCtrl KB article" Name="kbDSCTRL" />
-        <Separator />
-        <MenuItem Header="Create Tech 2 Tech ticket" Name="techToTech" />
-        <Separator />
-        <MenuItem Header="Check for updates" Name="hlpCheckUpdate" />
-        <MenuItem Header="View application logs" Name="openLogs" />
-        <MenuItem Header="About" Name="hlpAbout" />
-    </MenuItem>
-    <MenuItem Header="_Test">
-        <MenuItem Header="Add to Software Group" Name="AddToGroup" />
-        <MenuItem Header="Add to Printer Group" Name="AddToPrinter" />
-        <MenuItem Header="Move and Disable Computers" Name="MoveAndDisable" />
-        <MenuItem Header="Update Dell BIOS" Name="UpdateBIOS" />
-        <MenuItem Header="Get Printer IP" Name="GetPrintIP" />
-        <MenuItem Header="Ping" Name="Ping" />
-        <MenuItem Header="PSRemote" Name="PSRemote" />
-        <MenuItem Header="Generate GPO Report" Name="GPOReport" />
-        <MenuItem Header="Canned Phrases" Name="CannedPhrases" />
-        <MenuItem Header="Num Groups" Name="NumGroups" />
-    </MenuItem>
-</Menu>
-<ToolBarTray DockPanel.Dock="Top">
-    <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
-        <Label Content="Computer Name:" Height="24" Margin="4" />
-        <TextBox AcceptsReturn="false" Name="compNameText" Text="${ENV:ComputerName}" Width="128" />
-        <Label Name="lblProgress" Content="Task progress:" Visibility="Collapsed" Height="24" Margin="4" />
-        <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="1" Visibility="Collapsed" Height="24" Margin="4" Width="300"></ProgressBar>
-        <Button Content="Get Computer" Height="31" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.52,0.548" Name="GetComputer"/>
-        <CheckBox Content="w/Properties" Height="32" VerticalAlignment="Top" Name="WithProperties"/>
-        <ComboBox Name="PropertiesDropbox" Height="32" Margin="0" VerticalAlignment="Top" Width="120" StaysOpenOnEdit="True" Text="Properties">
-            <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
-        </ComboBox>
-    </ToolBar>
-</ToolBarTray>
-<ScrollViewer Name="outputScroller">
-    <TextBlock TextWrapping="Wrap" Name="outputText" FontFamily="Courier New" />
-</ScrollViewer>
-</DockPanel>
+            <MenuItem Header="_Groups">
+                <MenuItem Header="_UTOSPA Security Groups">
+                    <MenuItem Header="Create" Name="CreateSecGrp">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <StackPanel Width="256">
+                                    <TextBlock FontWeight="Bold">Create new security group</TextBlock>
+                                    <TextBlock TextWrapping="Wrap">Creates a new security group that conforms to the UTOSPA naming convention</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    <MenuItem Header="Bulk import" Name="ImportSecGrp">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <StackPanel Width="256">
+                                    <TextBlock FontWeight="Bold">Import security groups from a migration worksheet</TextBlock>
+                                    <TextBlock TextWrapping="Wrap">This tool will walk you through creating a collection of security groups from a migration worksheet.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                    <MenuItem Header="Bulk rename" Name="RenameSecGrp">
+                        <MenuItem.ToolTip>
+                            <ToolTip>
+                                <StackPanel Width="256">
+                                    <TextBlock FontWeight="Bold">Rename security groups</TextBlock>
+                                    <TextBlock TextWrapping="Wrap">Use this tool when you need to rename all security groups that belong to a department or business unit within the nested security group standard.</TextBlock>
+                                </StackPanel>
+                            </ToolTip>
+                        </MenuItem.ToolTip>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_OU">
+                <MenuItem Header="Create Saved Queries" Name="SQXML">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Create Saved Queries</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Generate XML files to import as Saved Queries into ADUC.</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Migrate GPO" Name="MIGGPO">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Migrate GPO</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Copy GPO links from an existing OU to one of the migration staging areas</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Clean computers in OU" Name="UPCOMP">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Clean Computers in OU</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Standardizes the description field of computer objects and checks for stale/unused computers</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Prepare OU for Deletion" Name="CLEANOU">
+                    <MenuItem.Icon>
+                        <Image Source="$includePath/img/MS-stdlib-warning-128x128.png" />
+                    </MenuItem.Icon>
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Prepare OU for Deletion</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Prepares an existing OU for retirement by offering to remove unused GPO objects, computer accounts and security groups</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Resources">
+                <MenuItem Header="File Share Report" Name="SHRRPT">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">File Share Report</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Collects information about a network share and generates an HTML report</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+                <MenuItem Header="Printer Report" Name="PRTRPT">
+                    <MenuItem.ToolTip>
+                        <ToolTip>
+                            <StackPanel Width="256">
+                                <TextBlock FontWeight="Bold">Printer Report</TextBlock>
+                                <TextBlock TextWrapping="Wrap">Collects information on specified printers and generates a report in HTML format</TextBlock>
+                            </StackPanel>
+                        </ToolTip>
+                    </MenuItem.ToolTip>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="Open AD Standard KB article" Name="kbADSTD" />
+                <MenuItem Header="Open DSCtrl KB article" Name="kbDSCTRL" />
+                <Separator />
+                <MenuItem Header="Create Tech 2 Tech ticket" Name="techToTech" />
+                <Separator />
+                <MenuItem Header="Check for updates" Name="hlpCheckUpdate" />
+                <MenuItem Header="View application logs" Name="openLogs" />
+                <MenuItem Header="About" Name="hlpAbout" />
+            </MenuItem>
+            <MenuItem Header="_Test">
+                <MenuItem Header="Add to Software Group" Name="AddToGroup" />
+                <MenuItem Header="Add to Printer Group" Name="AddToPrinter" />
+                <MenuItem Header="Move and Disable Computers" Name="MoveAndDisable" />
+                <MenuItem Header="Update Dell BIOS" Name="UpdateBIOS" />
+                <MenuItem Header="Get Printer IP" Name="GetPrintIP" />
+                <MenuItem Header="Ping" Name="Ping" />
+                <MenuItem Header="PSRemote" Name="PSRemote" />
+                <MenuItem Header="Generate GPO Report" Name="GPOReport" />
+                <MenuItem Header="Canned Phrases" Name="CannedPhrases" />
+                <MenuItem Header="Num Groups" Name="NumGroups" />
+                <MenuItem Header="Get TPM" Name="GetTPM" />
+                <MenuItem Header="Get BitLocker" Name="GetBitLocker" />
+            </MenuItem>
+        </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
+                <Label Content="Computer Name:" Height="24" Margin="4" />
+                <TextBox AcceptsReturn="false" Name="compNameText" Text="${ENV:ComputerName}" Width="128" />
+                <Label Name="lblProgress" Content="Task progress:" Visibility="Collapsed" Height="24" Margin="4" />
+                <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="1" Visibility="Collapsed" Height="24" Margin="4" Width="300"></ProgressBar>
+                <Button Content="Get Computer" Height="31" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.52,0.548" Name="GetComputer"/>
+                <Button Name="TestRemote" Content="Test Remote" Height="32" VerticalAlignment="Top" Width="75"/>
+            </ToolBar>
+        </ToolBarTray>
+        <ScrollViewer Name="outputScroller">
+            <TextBlock TextWrapping="Wrap" Name="outputText" FontFamily="Courier New" />
+        </ScrollViewer>
+    </DockPanel>
 </Window>
 "@
 
@@ -357,33 +355,44 @@ $Global:SyncHash.Verify.Add_Click({
 
     $code = {
         . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "verify-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        # Let the customer know we are about to try pinging their host
-        $Global:SyncHash.print("Attempting to ping...", $false)
+        Start-Transcript -Path (Join-Path $Global:logdir "ping-$((get-date).ToFileTime())") -IncludeInvocationHeader
 
-        # Pull the computer name from the form and store it locally
-        # These calls are syncronized; so we want to access the form as little as possible
-        $global:compToPing = ''
+        $global:compToTest = ''
         $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToPing = $Global:SyncHash.compNameText.text}
+                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
         )
 
-        # Is the computer name valid?
-        if ( (GlobalVarValidate $global:compToPing '^([\w\.-])+$')  ) {
-            if (Test-Connection -Cn $global:compToPing -BufferSize 16 -Count 1 -ea 0 -quiet) {
-                # yup
-                # set the display with more verbose info
-                $global:pingResult = Test-Connection $global:compToPing | Format-Table Address, ResponseTime | Out-string -Width 128
-                $Global:SyncHash.print($global:pingResult, $false)
-            } else {
-                # nope there was a bad test. display message
-                $Global:SyncHash.print("$($global:compToPing) did not respond", $false)
+        # Check to see if it's a valid computer name
+        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
+
+            $global:SyncHash.print("Attempting to ping $global:compToTest...", $false)
+
+            $pingInfo = Test-NetConnection $global:compToTest
+
+            if($pingInfo.PingSucceeded) {
+                $global:SyncHash.print("Ping result: success", $false)
+                $global:SyncHash.print(("IP address: {0}" -f $pingInfo.RemoteAddress.IPAddressToString), $false)
+                $global:SyncHash.print(("MS: {0}" -f($pingInfo.PingReplyDetails.RoundTripTime), $false))
+
+                $FQDN = nslookup $pingInfo.RemoteAddress.IPAddressToString
+
+                foreach($line in $FQDN) {
+                    if($line.StartsWith("Name:")) {
+                        $global:SyncHash.print(("FQDN: {0}" -f ($line -split " ")[4]), $false)
+                    }
+                }
             }
-        } else {
-            # not a valid computer name.
-            $Global:SyncHash.print("$($global:compToPing) is not a valid computer name.`n", $false)
+            else {
+                $global:SyncHash.print("Ping not successful", $false)
+            }
         }
-        Stop-Transcript
+        else {
+            # Inform them that it's not a valid name.
+            $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.`n", $false)
+        }
+
+        $global:SyncHash.print("----------")
+
     }
     $PSinstance = [powershell]::Create().AddScript($Code)
     $PSinstance.Runspace = $Runspace
@@ -796,25 +805,33 @@ $Global:SyncHash.Ping.Add_Click({
                 [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
         )
 
-        $global:SyncHash.print("Attempting to ping $global:compToTest...", $false)
+        # Check to see if it's a valid computer name
+        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
 
-        $pingInfo = Test-NetConnection $global:compToTest
+            $global:SyncHash.print("Attempting to ping $global:compToTest...", $false)
 
-        if($pingInfo.PingSucceeded) {
-            $global:SyncHash.print("Ping result: success", $false)
-            $global:SyncHash.print(("IP address: {0}" -f $pingInfo.RemoteAddress.IPAddressToString), $false)
-            $global:SyncHash.print(("MS: {0}" -f($pingInfo.PingReplyDetails.RoundTripTime), $false))
+            $pingInfo = Test-NetConnection $global:compToTest
 
-            $FQDN = nslookup $pingInfo.RemoteAddress.IPAddressToString
+            if($pingInfo.PingSucceeded) {
+                $global:SyncHash.print("Ping result: success", $false)
+                $global:SyncHash.print(("IP address: {0}" -f $pingInfo.RemoteAddress.IPAddressToString), $false)
+                $global:SyncHash.print(("MS: {0}" -f($pingInfo.PingReplyDetails.RoundTripTime), $false))
 
-            foreach($line in $FQDN) {
-                if($line.StartsWith("Name:")) {
-                    $global:SyncHash.print(("FQDN: {0}" -f ($line -split " ")[4]), $false)
+                $FQDN = nslookup $pingInfo.RemoteAddress.IPAddressToString
+
+                foreach($line in $FQDN) {
+                    if($line.StartsWith("Name:")) {
+                        $global:SyncHash.print(("FQDN: {0}" -f ($line -split " ")[4]), $false)
+                    }
                 }
+            }
+            else {
+                $global:SyncHash.print("Ping not successful", $false)
             }
         }
         else {
-            $global:SyncHash.print("Ping not successful", $false)
+            # Inform them that it's not a valid name.
+            $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.`n", $false)
         }
 
         $global:SyncHash.print("----------")
@@ -930,8 +947,98 @@ $Global:SyncHash.CannedPhrases.Add_Click({
 $Global:SyncHash.NumGroups.Add_Click({
     $code = {
         . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        Start-Transcript -Path (Join-Path $Global:logdir "numgroups-$((get-date).ToFileTime())") -IncludeInvocationHeader
         . "${includePath}\NumGroups.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.TestRemote.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+
+        $global:compToTest = ''
+        $syncHash.Window.Dispatcher.invoke(
+                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+        )
+
+        # Check to see if it's a valid computer name
+        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
+            $Global:SyncHash.print(("Testing {0} for remote access, this may take a few moments..." -f $global:compToTest), $false)
+
+            $pingInfo = Test-NetConnection $global:compToTest
+
+            if($pingInfo.PingSucceeded) {
+                try {
+                    $session = New-PSSession $global:compToTest 
+                    if($session.state -eq "Opened") {
+                        Remove-PSSession $session
+                    }
+                    $Global:SyncHash.print(("{0} is available and able to be remoted into." -f $global:compToTest), $false)
+                }
+                catch {
+                    $Global:SyncHash.print(("{0} is available but could not be remoted into." -f $global:compToTest), $false)
+                }
+            }
+            else {
+                $Global:SyncHash.print(("{0} could not be reached, it may be turned off or is not on the network." -f $global:compToTest), $false)
+            }
+        }
+        else {
+            # Inform them that it's not a valid name.
+            $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.", $false)
+        }
+        $Global:SyncHash.print("----------", $false)
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.GetTPM.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "gettpm-$((get-date).ToFileTime())") -IncludeInvocationHeader
+
+        $global:compToTest = ''
+        $syncHash.Window.Dispatcher.invoke(
+                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+        )
+        try {
+            $info = Get-CimInstance -class Win32_Tpm -namespace root\CIMV2\Security\MicrosoftTpm -ComputerName $global:compToTest -erroraction stop
+            $Global:SyncHash.print(("TPM Information for {0}:" -f $global:compToTest), $false)
+            $Global:SyncHash.print(("TPM Enabled - {0}" -f $info.IsEnabled_InitialValue), $false)
+            $Global:SyncHash.print(("Version - {0}" -f $info.PhysicalPresenceVersionInfo), $false)
+            $Global:SyncHash.print("----------", $false)
+        }
+        catch {
+            $Global:SyncHash.print("Something went wrong.", $false)
+        }
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.GetBitLocker.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "getbitlocker-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\GetBitLocker.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.Example.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "gettpm-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\Example.ps1"
     }
     $PStask = [powershell]::Create().AddScript($Code)
     $PStask.Runspace = $Runspace
@@ -1544,6 +1651,7 @@ Yhis action requires elevation. Please click OK and authorize the elevation to s
 $global:SyncHash.CopyLogMenuItem.Add_Click({
     Set-Clipboard -Value $Global:SyncHash.outputText.text
 })
+
 
 $global:SyncHash.ClearMenuItem.Add_Click({
     $Global:SyncHash.print("", $true)

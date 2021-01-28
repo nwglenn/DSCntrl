@@ -52,7 +52,6 @@ $btnOk.add_click({
         catch{
             $Global:SyncHash.print(("Couldn't find the computer, please try again."), $false)
         }
-
     }
     else{
         $inputText = $inputBox.text
