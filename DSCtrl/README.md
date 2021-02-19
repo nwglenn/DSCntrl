@@ -32,14 +32,6 @@ By default, DSCtrl logs all errors and status messages to ```%localappdata%\ASU\
 [function name]-[time stamp in NT Time].log
 ```
 
-## Updates
-Starting with DSCtrl 1.0.3, an automatic update feature is built into the application. When the application starts, it will check for a newer version of the software and provide an opportunity for you to automatically download and install the newer version.
-
-## Getting help
-The Deskside Control Panel is a project managed by the UTO Deskside Operations Management team. If you run into problems, or have feedback, please feel free to contact us.
-
-The preferred contact method is via a Service-Now ticket. In the Service Now catalog, select the Tech 2 Tech option, and submit a ticket to the _UTO Deskside operations management_ queue.
-
 ## License
 
 This software is intended to be used by UTO Deskside staff and student workers. Please do not distribute it outside of the university.
