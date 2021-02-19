@@ -211,8 +211,6 @@ Title="$globalTitle" Height="660" Width="1100">
             <MenuItem Header="_Test">
                 <MenuItem Header="Add to Software Group" Name="AddToGroup" />
                 <MenuItem Header="Add to Printer Group" Name="AddToPrinter" />
-                <MenuItem Header="Move and Disable Computers" Name="MoveAndDisable" />
-                <MenuItem Header="Update Dell BIOS" Name="UpdateBIOS" />
                 <MenuItem Header="Get Printer IP" Name="GetPrintIP" />
                 <MenuItem Header="Ping" Name="Ping" />
                 <MenuItem Header="PSRemote" Name="PSRemote" />
@@ -221,6 +219,7 @@ Title="$globalTitle" Height="660" Width="1100">
                 <MenuItem Header="Num Groups" Name="NumGroups" />
                 <MenuItem Header="Get TPM" Name="GetTPM" />
                 <MenuItem Header="Get BitLocker" Name="GetBitLocker" />
+                <MenuItem Header="Get Last Logon CSV" Name="GetLastLogonCSV" />
             </MenuItem>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
@@ -691,10 +690,6 @@ $Global:SyncHash.MIGGPO.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
-$Global:SyncHash.PropertiesDropbox.add_DropDownClosed({
-    $syncHash.Window.Dispatcher.invoke([action]{$global:selectedProperty = $Global:SyncHash.PropertiesDropbox.text})
-})
-
 $Global:SyncHash.GetComputer.Add_Click({
     $code = {
         . "${includePath}\global.ps1"
@@ -762,7 +757,7 @@ $Global:SyncHash.AddToPrinter.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
-$Global:SyncHash.MoveAndDisable.Add_Click({
+$Global:SyncHash.Disable.Add_Click({
     $code = {
         . "${includePath}\global.ps1"
         Start-Transcript -Path (Join-Path $Global:logdir "moveanddisable-$((get-date).ToFileTime())") -IncludeInvocationHeader
@@ -1028,6 +1023,17 @@ $Global:SyncHash.GetBitLocker.Add_Click({
         . "${includePath}\global.ps1"
         Start-Transcript -Path (Join-Path $Global:logdir "getbitlocker-$((get-date).ToFileTime())") -IncludeInvocationHeader
         . "${includePath}\GetBitLocker.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
+
+$Global:SyncHash.GetLastLogonCSV.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "getbitlocker-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\LastLogon.ps1"
     }
     $PStask = [powershell]::Create().AddScript($Code)
     $PStask.Runspace = $Runspace

@@ -1,5 +1,26 @@
 # DSCtrl Release Notes
 
+## Version 1.3.1 February 19th, 2020
+
+**NOTE**
+    - Version number has been updated to reflect development off of the original DSCtrl program instead of starting over.
+
+- **REMOVED**: Move and Disable Module
+
+- **REMOVED**: Update Dell BIOS Module
+
+- **NEW**: Get Last Logon CSV Module
+    - This module was a script Jake Hartman had provided to us to adapt to the DSCtrl UI
+
+- **UPDATED**: Num Groups Module
+    - Updated the interface for displaying the resulting number of groups for each button
+    - Added the option to add the user to the group selected (with confirmation)
+
+- **NEXT STEPS**
+    - Update the Share Reporting module to include the errors correctly (as it has been before)
+    - Continue to develop a TreeView UI to easier specify files/folders/OUs/AD Groups, etc instead of typing in a name
+    - Add tooltips to the dropdown menu items for more clarity on functionality
+
 ## Version: 1.0 Januray 29th, 2020
 
 - **UPDATED**: File Share Report  
