@@ -1,6 +1,22 @@
 # DSCtrl Release Notes
 
-## Version 1.3.1 February 19th, 2020
+## Version 1.3.2 April 21st , 2021
+
+- **UPDATED**: Main Interface
+    - The interface has changed from a dropdown menu driven interface to a tabs and button interface.
+
+- **UPDATED**: File Share Report
+    - The report generated should correctly display any errors and warnings when viewing the HTML report.
+
+- **REMOVED**: LAPS retrieval module
+
+- **REMOVED**: Establish BOMGAR connection
+    - This function was not working as intended removing it from the UI for now
+
+- **REMOVED**: Clean OU Module
+    - Removing this until the need arises to bring it back, seems like a module that could do some accidental damage without proper testing
+
+## Version 1.3.1 February 19th, 2021
 
 **NOTE**
     - Version number has been updated to reflect development off of the original DSCtrl program instead of starting over.
@@ -21,7 +37,7 @@
     - Continue to develop a TreeView UI to easier specify files/folders/OUs/AD Groups, etc instead of typing in a name
     - Add tooltips to the dropdown menu items for more clarity on functionality
 
-## Version: 1.0 Januray 29th, 2020
+## Version: 1.0 Januray 29th, 2021
 
 - **UPDATED**: File Share Report  
     - Added "Include Empty Folders" Checkbox  
