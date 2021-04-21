@@ -13,229 +13,159 @@ xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:local="clr-namespace:Deskside_Control_Panel"
 mc:Ignorable="d"
-Title="$globalTitle" Height="660" Width="1100">
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="Copy log" Name="CopyLogMenuItem" />
-                <MenuItem Header="_Clear log" Name="ClearMenuItem" />
-                <MenuItem Header="Example Item" Name="Example" />
-                <Separator />
-                <MenuItem Header="_Exit" Name="exitMenuItem" />
-            </MenuItem>
-            <MenuItem Header="_Computer">
-                <MenuItem Header="Ping" Name="Verify">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Test if computer is online</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Performs a ping test using the provided computer name and returns the result in the log window</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Get Security Groups" Name="CompSecGroup">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock TextWrapping="Wrap">Returns a list of security groups the computer is a member of</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Get password" Name="LAPS">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Get LAPS password</TextBlock>
-                                <TextBlock TextWrapping="Wrap">For machines managed by the LAPS client, this function obtains the most recently configured password for the provided computer name</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Go to asset" Name="goToAsset">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Go to Service-Now asset record</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Uses your default browser to search the Service-Now asset database for the machine name you specified</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Start Bomgar session" Name="BOMGAR">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Remote support using Bomgar</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Uses the computer name provided to attempt a remote support session using Bomgar.</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_User">
-                <MenuItem Header="Exchange DL offboarding" Name="ExDLRemoveMember">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Remove a user from managed DLs</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Remove a user account from any Exchange Distribution Lists (DLs) that you have access to manage.</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Token Calculator" Name="CalcToken">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Estimate the token size for a user account</TextBlock>
-                                <TextBlock TextWrapping="Wrap">This tool examines the group membership information for a provided user account in order to estimate the size of their token object</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_Groups">
-                <MenuItem Header="_UTOSPA Security Groups">
-                    <MenuItem Header="Create" Name="CreateSecGrp">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <StackPanel Width="256">
-                                    <TextBlock FontWeight="Bold">Create new security group</TextBlock>
-                                    <TextBlock TextWrapping="Wrap">Creates a new security group that conforms to the UTOSPA naming convention</TextBlock>
-                                </StackPanel>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-                    <MenuItem Header="Bulk import" Name="ImportSecGrp">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <StackPanel Width="256">
-                                    <TextBlock FontWeight="Bold">Import security groups from a migration worksheet</TextBlock>
-                                    <TextBlock TextWrapping="Wrap">This tool will walk you through creating a collection of security groups from a migration worksheet.</TextBlock>
-                                </StackPanel>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-                    <MenuItem Header="Bulk rename" Name="RenameSecGrp">
-                        <MenuItem.ToolTip>
-                            <ToolTip>
-                                <StackPanel Width="256">
-                                    <TextBlock FontWeight="Bold">Rename security groups</TextBlock>
-                                    <TextBlock TextWrapping="Wrap">Use this tool when you need to rename all security groups that belong to a department or business unit within the nested security group standard.</TextBlock>
-                                </StackPanel>
-                            </ToolTip>
-                        </MenuItem.ToolTip>
-                    </MenuItem>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_OU">
-                <MenuItem Header="Create Saved Queries" Name="SQXML">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Create Saved Queries</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Generate XML files to import as Saved Queries into ADUC.</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Migrate GPO" Name="MIGGPO">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Migrate GPO</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Copy GPO links from an existing OU to one of the migration staging areas</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Clean computers in OU" Name="UPCOMP">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Clean Computers in OU</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Standardizes the description field of computer objects and checks for stale/unused computers</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <Separator />
-                <MenuItem Header="Prepare OU for Deletion" Name="CLEANOU">
-                    <MenuItem.Icon>
-                        <Image Source="$includePath/img/MS-stdlib-warning-128x128.png" />
-                    </MenuItem.Icon>
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Prepare OU for Deletion</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Prepares an existing OU for retirement by offering to remove unused GPO objects, computer accounts and security groups</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_Resources">
-                <MenuItem Header="File Share Report" Name="SHRRPT">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">File Share Report</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Collects information about a network share and generates an HTML report</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-                <MenuItem Header="Printer Report" Name="PRTRPT">
-                    <MenuItem.ToolTip>
-                        <ToolTip>
-                            <StackPanel Width="256">
-                                <TextBlock FontWeight="Bold">Printer Report</TextBlock>
-                                <TextBlock TextWrapping="Wrap">Collects information on specified printers and generates a report in HTML format</TextBlock>
-                            </StackPanel>
-                        </ToolTip>
-                    </MenuItem.ToolTip>
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_Help">
-                <MenuItem Header="Open AD Standard KB article" Name="kbADSTD" />
-                <MenuItem Header="Open DSCtrl KB article" Name="kbDSCTRL" />
-                <Separator />
-                <MenuItem Header="Create Tech 2 Tech ticket" Name="techToTech" />
-                <Separator />
-                <MenuItem Header="Check for updates" Name="hlpCheckUpdate" />
-                <MenuItem Header="View application logs" Name="openLogs" />
-                <MenuItem Header="About" Name="hlpAbout" />
-            </MenuItem>
-            <MenuItem Header="_Test">
-                <MenuItem Header="Add to Software Group" Name="AddToGroup" />
-                <MenuItem Header="Add to Printer Group" Name="AddToPrinter" />
-                <MenuItem Header="Get Printer IP" Name="GetPrintIP" />
-                <MenuItem Header="Ping" Name="Ping" />
-                <MenuItem Header="PSRemote" Name="PSRemote" />
-                <MenuItem Header="Generate GPO Report" Name="GPOReport" />
-                <MenuItem Header="Canned Phrases" Name="CannedPhrases" />
-                <MenuItem Header="Num Groups" Name="NumGroups" />
-                <MenuItem Header="Get TPM" Name="GetTPM" />
-                <MenuItem Header="Get BitLocker" Name="GetBitLocker" />
-                <MenuItem Header="Get Last Logon CSV" Name="GetLastLogonCSV" />
-            </MenuItem>
-        </Menu>
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Stretch">
-                <Label Content="Computer Name:" Height="24" Margin="4" />
-                <TextBox AcceptsReturn="false" Name="compNameText" Text="${ENV:ComputerName}" Width="128" />
-                <Label Name="lblProgress" Content="Task progress:" Visibility="Collapsed" Height="24" Margin="4" />
-                <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="1" Visibility="Collapsed" Height="24" Margin="4" Width="300"></ProgressBar>
-                <Button Content="Get Computer" Height="31" VerticalAlignment="Top" Width="89" RenderTransformOrigin="0.52,0.548" Name="GetComputer"/>
-                <Button Name="TestRemote" Content="Test Remote" Height="32" VerticalAlignment="Top" Width="75"/>
-            </ToolBar>
-        </ToolBarTray>
-        <ScrollViewer Name="outputScroller">
-            <TextBlock TextWrapping="Wrap" Name="outputText" FontFamily="Courier New" />
-        </ScrollViewer>
-    </DockPanel>
+Title="DSCTRL v1.3.2" Height="521" Width="621">
+<Grid>
+    <Menu HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Width="460">
+        <MenuItem Header="_File">
+            <MenuItem Header="Copy log" Name="CopyLogMenuItem" />
+            <MenuItem Header="_Clear log" Name="ClearMenuItem" />
+            <Separator />
+            <MenuItem Header="_Exit" Name="exitMenuItem" />
+        </MenuItem>
+        <MenuItem Header="_Help">
+            <MenuItem Header="Open AD Standard KB article" Name="kbADSTD" />
+            <MenuItem Header="Open DSCtrl KB article" Name="kbDSCTRL" />
+            <Separator />
+            <MenuItem Header="Create Tech 2 Tech ticket" Name="techToTech" />
+            <Separator />
+            <MenuItem Header="Check for updates" Name="hlpCheckUpdate" />
+            <MenuItem Header="View application logs" Name="openLogs" />
+            <MenuItem Header="About" Name="hlpAbout" />
+        </MenuItem>
+    </Menu>
+    <ProgressBar Name="progress" Minimum="0" Maximum="100" Value="1" Visibility="Collapsed" Height="24" Margin="4" Width="300"></ProgressBar>
+    <TabControl Height="105" Margin="0,18,0,0" Width="613" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <TabItem Header="Computer">
+            <Grid Background="#FFE5E5E5" Margin="0,0,-1,2" Width="608">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"/>
+                    <ColumnDefinition Width="0*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox AcceptsReturn="false" Name="compNameText" Grid.Column="2" HorizontalAlignment="Left" Height="21" Margin="101,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
+                <Label Content="Computer Name:" Grid.Column="1" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="26" Width="101"/>
+                <Button Name="Ping" Content="Ping" Grid.Column="2" HorizontalAlignment="Left" Margin="6,41,0,0" VerticalAlignment="Top" Width="56" Height="24"/>
+                <Button Name="CompSecGroup" Grid.ColumnSpan="3" Content="Security Groups" HorizontalAlignment="Left" Margin="67,41,0,0" VerticalAlignment="Top" Width="92" Height="24" RenderTransformOrigin="0.441,0.513"/>
+                <Button Padding="3" Name="goToAsset" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="164,41,0,0" VerticalAlignment="Top" Width="77" Height="24">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="66">Go to Asset</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Content="Get Computer" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.52,0.548" Name="GetComputer" Grid.ColumnSpan="3" Margin="246,10,264,0"/>
+                <Button Name="TestRemote" Content="Test Remote" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="246,41,264,0" RenderTransformOrigin="1.313,0.5"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="User">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="237*"/>
+                    <ColumnDefinition Width="370*"/>
+                </Grid.ColumnDefinitions>
+                <Button Padding="5" Name="ExDLRemoveMember"  HorizontalAlignment="Left" Margin="14,14,0,0" VerticalAlignment="Top" Width="80" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="68"><Run Text="Exchange DL"/><LineBreak/><Run Text="Offboarding"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Name="CalcToken" HorizontalAlignment="Left" Margin="109,14,0,0" VerticalAlignment="Top" Width="70" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="56"><Run Text="Token"/><LineBreak/><Run Text="Calculator"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Groups">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="97*"/>
+                    <ColumnDefinition Width="689*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="UTOSPA Security Groups" Margin="35,5,0,50" RenderTransformOrigin="0.517,0.353" Width="120" HorizontalAlignment="Left" Grid.ColumnSpan="2" FontSize="10"/>
+                <Separator HorizontalAlignment="Left" Height="6" Margin="51,22,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                    <Separator.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleY="-0.182"/>
+                            <RotateTransform Angle="0.136"/>
+                            <TranslateTransform X="-0.159" Y="-0.001"/>
+                        </TransformGroup>
+                    </Separator.RenderTransform>
+                </Separator>
+                <Button Name="CreateSecGrp" Content="Create" Margin="9,37,20,0" VerticalAlignment="Top" Height="20" />
+                <Button Name="ImportSecGrp" Content="Bulk Import" HorizontalAlignment="Left" Margin="60,37,0,0" VerticalAlignment="Top" Width="74" Height="20" Grid.ColumnSpan="2"/>
+                <Button Name="RenameSecGrp" Content="Bulk Rename" HorizontalAlignment="Left" Margin="64,37,0,0" VerticalAlignment="Top" Width="78" Height="20" Grid.Column="1"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="OU">
+            <Grid Background="#FFE5E5E5">
+                <Button Padding="5"  Name="SQXML" HorizontalAlignment="Left" Margin="14,14,0,0" VerticalAlignment="Top" Width="70" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="52"><Run Text="Saved"/><LineBreak/><Run Text="AD Query"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Name="MIGGPO" HorizontalAlignment="Left" Margin="109,14,0,0" VerticalAlignment="Top" Width="70" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="45"><Run Text="Migrate"/><LineBreak/><Run Text="GPO"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5" Name="UPCOMP" HorizontalAlignment="Left" Margin="202,14,0,0" VerticalAlignment="Top" Width="70" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="58"><Run Text="Clean"/><LineBreak/><Run Text="Computers"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Resources">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="167*"/>
+                    <ColumnDefinition Width="441*"/>
+                </Grid.ColumnDefinitions>
+                <Button Padding="5" Name="SHRRPT" HorizontalAlignment="Left" Margin="14,14,0,0" VerticalAlignment="Top" Width="70" Height="45">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="61"><Run Text="File Share"/><LineBreak/><Run Text="Report"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="5"  Name="PRTRPT" HorizontalAlignment="Left" Margin="109,14,0,0" VerticalAlignment="Top" Width="70" Height="45" Grid.ColumnSpan="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextAlignment="Center" Width="52"><Run Text="Printer"/><LineBreak/><Run Text="Report"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </TabItem>
+        <TabItem Header="QA (Testing)">
+            <Grid Background="#FFE5E5E5" Margin="0,0,0,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="235*"/>
+                    <ColumnDefinition Width="372*"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="AddToGroup" Content="Software Group" HorizontalAlignment="Left" Margin="91,41,0,0" VerticalAlignment="Top" Width="97" Height="20" Grid.Column="1"/>
+                <Button Name="AddToPrinter" Content="Printer Group" HorizontalAlignment="Left" Margin="7,41,0,0" VerticalAlignment="Top" Width="79" Grid.Column="1" Height="20"/>
+                <Button Name="GetPrintIP" Content="Printer IP" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="79" Grid.Column="1" Height="21"/>
+                <Button Name="PSRemote" Content="PSRemote" HorizontalAlignment="Left" Margin="77,41,0,0" VerticalAlignment="Top" Width="63" Height="20"/>
+                <Button Name="GPOReport" Content="GPO Report" HorizontalAlignment="Left" Margin="2,41,0,0" VerticalAlignment="Top" Width="70" Height="20"/>
+                <Button Name="CannedPhrases" Content="Standard Email" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" Width="97" Grid.Column="1" Height="21"/>
+                <Button Name="NumGroups" Content="Count Sec Groups" HorizontalAlignment="Left" Margin="193,10,0,0" VerticalAlignment="Top" Width="103" Grid.Column="1" Height="21"/>
+                <Button Name="GetTPM" Content="Get TPM" HorizontalAlignment="Left" Margin="145,10,0,0" VerticalAlignment="Top" Width="80" Height="20"/>
+                <Button Name="GetBitLocker" Content="Get BitLocker" HorizontalAlignment="Left" Margin="145,41,0,0" VerticalAlignment="Top" Width="80" Height="20"/>
+                <Button Name="GetLastLogonCSV" Content="Last Logon" HorizontalAlignment="Left" Margin="193,41,0,0" VerticalAlignment="Top" Width="103" Grid.Column="1" Height="20"/>
+                <TextBox Name="compNameTextQA" HorizontalAlignment="Left" Height="19" Margin="2,10,0,0" TextWrapping="Wrap" Text="Computer Name" VerticalAlignment="Top" Width="138"/>
+                <Separator HorizontalAlignment="Left" Height="19" Margin="201,28,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                    <Separator.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="89.784"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Separator.RenderTransform>
+                </Separator>
+            </Grid>
+        </TabItem>
+    </TabControl>
+    <ScrollViewer Name="outputScroller" VerticalAlignment="Bottom" Height="357">
+        <TextBlock TextWrapping="Wrap" Name="outputText" FontFamily="Courier New" Height="354" />
+    </ScrollViewer>
+</Grid>
 </Window>
 "@
 
@@ -350,55 +280,6 @@ $Runspace.SessionStateProxy.SetVariable("includePath",$includePath)
 #===========================================================================
 # Use this space to add code to the various form elements in your GUI
 #===========================================================================
-$Global:SyncHash.Verify.Add_Click({
-
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "ping-$((get-date).ToFileTime())") -IncludeInvocationHeader
-
-        $global:compToTest = ''
-        $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
-        )
-
-        # Check to see if it's a valid computer name
-        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
-
-            $global:SyncHash.print("Attempting to ping $global:compToTest...", $false)
-
-            $pingInfo = Test-NetConnection $global:compToTest
-
-            if($pingInfo.PingSucceeded) {
-                $global:SyncHash.print("Ping result: success", $false)
-                $global:SyncHash.print(("IP address: {0}" -f $pingInfo.RemoteAddress.IPAddressToString), $false)
-                $global:SyncHash.print(("MS: {0}" -f($pingInfo.PingReplyDetails.RoundTripTime), $false))
-
-                $FQDN = nslookup $pingInfo.RemoteAddress.IPAddressToString
-
-                foreach($line in $FQDN) {
-                    if($line.StartsWith("Name:")) {
-                        $global:SyncHash.print(("FQDN: {0}" -f ($line -split " ")[4]), $false)
-                    }
-                }
-            }
-            else {
-                $global:SyncHash.print("Ping not successful", $false)
-            }
-        }
-        else {
-            # Inform them that it's not a valid name.
-            $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.`n", $false)
-        }
-
-        $global:SyncHash.print("----------")
-
-    }
-    $PSinstance = [powershell]::Create().AddScript($Code)
-    $PSinstance.Runspace = $Runspace
-    $PSinstance.BeginInvoke()
-
-})
-
 
 $Global:SyncHash.CompSecGroup.Add_Click({
     $code = {
@@ -435,89 +316,89 @@ $global:SyncHash.goToAsset.Add_Click({
     ")
 })
 
-$Global:SyncHash.LAPS.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "LAPS-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\Invoke-ClipBoardWindow.ps1"
+# $Global:SyncHash.LAPS.Add_Click({
+#     $code = {
+#         . "${includePath}\global.ps1"
+#         Start-Transcript -Path (Join-Path $Global:logdir "LAPS-$((get-date).ToFileTime())") -IncludeInvocationHeader
+#         . "${includePath}\Invoke-ClipBoardWindow.ps1"
 
-        $global:compToTest = ''
-        $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
-        )
+#         $global:compToTest = ''
+#         $syncHash.Window.Dispatcher.invoke(
+#                 [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+#         )
 
-        # is the computer name valid?
-        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
-            $Global:SyncHash.print("Does the computer exisist...", $false)
+#         # is the computer name valid?
+#         if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
+#             $Global:SyncHash.print("Does the computer exisist...", $false)
 
-            # try and see if the computer exisits
-            try{
-                Get-ADComputer $global:compToTest -ErrorAction Stop
-            }
-            catch{
-                # computer does not exisit in the AD
-                $Global:SyncHash.print("The computer $($global:compToTest) does not exsist. $($_.Exception.Message)", $false)
-            }
-            # must exist.
-            $Global:SyncHash.print("Yes `nLooking up password ...`n", $false)
+#             # try and see if the computer exisits
+#             try{
+#                 Get-ADComputer $global:compToTest -ErrorAction Stop
+#             }
+#             catch{
+#                 # computer does not exisit in the AD
+#                 $Global:SyncHash.print("The computer $($global:compToTest) does not exsist. $($_.Exception.Message)", $false)
+#             }
+#             # must exist.
+#             $Global:SyncHash.print("Yes `nLooking up password ...`n", $false)
 
-            # grab the password
-            $compObject = Get-ADComputer -Identity $global:compToTest -Property 'Name','ms-Mcs-AdmPwd','ms-Mcs-AdmPwdExpirationTime'
+#             # grab the password
+#             $compObject = Get-ADComputer -Identity $global:compToTest -Property 'Name','ms-Mcs-AdmPwd','ms-Mcs-AdmPwdExpirationTime'
 
-            # does the password exsist
-            if ($compObject.'ms-Mcs-AdmPwd'.length -gt 0) {
-                # looks like there is one
-                # popup the password
-                Invoke-ClipBoardWindow -Value $compObject.'ms-Mcs-AdmPwd' -Title $global:compToTest -Timer 120
-            } else {
-                # dispaly message that there is no password parameters.
-                $Global:SyncHash.print("${global:compToTest} exisits in AD but could not find a password`n", $false)
-            }
-        } else {
-            # invalid computer name.
-            $Global:SyncHash.print("${global:compToTest} is not a valid computer name.`n", $false)
-        }
-        Stop-Transcript
-    }
-    $PSexit = [powershell]::Create().AddScript($Code)
-    $PSexit.Runspace = $Runspace
-    $myJob = $PSexit.BeginInvoke()
-    })
+#             # does the password exsist
+#             if ($compObject.'ms-Mcs-AdmPwd'.length -gt 0) {
+#                 # looks like there is one
+#                 # popup the password
+#                 Invoke-ClipBoardWindow -Value $compObject.'ms-Mcs-AdmPwd' -Title $global:compToTest -Timer 120
+#             } else {
+#                 # dispaly message that there is no password parameters.
+#                 $Global:SyncHash.print("${global:compToTest} exisits in AD but could not find a password`n", $false)
+#             }
+#         } else {
+#             # invalid computer name.
+#             $Global:SyncHash.print("${global:compToTest} is not a valid computer name.`n", $false)
+#         }
+#         Stop-Transcript
+#     }
+#     $PSexit = [powershell]::Create().AddScript($Code)
+#     $PSexit.Runspace = $Runspace
+#     $myJob = $PSexit.BeginInvoke()
+#     })
 
-$Global:SyncHash.BOMGAR.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "creategroup-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\popup.ps1"
-        . "${includePath}\Invoke-BomgarJump.ps1"
+# $Global:SyncHash.BOMGAR.Add_Click({
+#     $code = {
+#         . "${includePath}\global.ps1"
+#         Start-Transcript -Path (Join-Path $Global:logdir "creategroup-$((get-date).ToFileTime())") -IncludeInvocationHeader
+#         . "${includePath}\popup.ps1"
+#         . "${includePath}\Invoke-BomgarJump.ps1"
 
-        $global:compToTest = ''
-        $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
-        )
+#         $global:compToTest = ''
+#         $syncHash.Window.Dispatcher.invoke(
+#                 [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+#         )
 
-        # is the computer name valid?
-        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
-            $invokeResult = Invoke-BomgarJump -ComputerName $global:compToTest
+#         # is the computer name valid?
+#         if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
+#             $invokeResult = Invoke-BomgarJump -ComputerName $global:compToTest
 
-            if ($invokeResult -ne $null) {
-                $nestConfirm = PopupBox "There was a problem calling the Bomgar Representative Console, would you like to launch the web console instead?" "Bomgar" "yn"
-                if ($nestConfirm -ne 'yes') {
-                    exit 5
-                }
+#             if ($invokeResult -ne $null) {
+#                 $nestConfirm = PopupBox "There was a problem calling the Bomgar Representative Console, would you like to launch the web console instead?" "Bomgar" "yn"
+#                 if ($nestConfirm -ne 'yes') {
+#                     exit 5
+#                 }
 
-                # launch web console
-                (New-Object -Com Shell.Application).Open("https://bomgar.asu.edu/login/console")
-            }
-        } else {
-            PopupBox "Could not read computer name from form. Please check that the computer name is entered and try again."
-        }
-        Stop-Transcript
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
+#                 # launch web console
+#                 (New-Object -Com Shell.Application).Open("https://bomgar.asu.edu/login/console")
+#             }
+#         } else {
+#             PopupBox "Could not read computer name from form. Please check that the computer name is entered and try again."
+#         }
+#         Stop-Transcript
+#     }
+#     $PStask = [powershell]::Create().AddScript($Code)
+#     $PStask.Runspace = $Runspace
+#     $myJob = $PStask.BeginInvoke()
+# })
 
 $Global:SyncHash.CreateSecGrp.Add_Click({
     $code = {
@@ -757,28 +638,6 @@ $Global:SyncHash.AddToPrinter.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
-$Global:SyncHash.Disable.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "moveanddisable-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\MoveAndDisable.ps1"
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
-
-$Global:SyncHash.UpdateBIOS.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "updatebios-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\UpdatingDellBIOS.ps1"
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
-
 $Global:SyncHash.GetPrintIP.Add_Click({
     $code = {
         . "${includePath}\global.ps1"
@@ -845,7 +704,7 @@ $Global:SyncHash.PSRemote.Add_Click({
 
         $global:compToTest = ''
         $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+                [action]{ $global:compToTest = $Global:SyncHash.compNameTextQA.text}
         )
 
         $global:SyncHash.print("Attempting to start a remote powershell session with $global:compToTest...", $false)
@@ -869,7 +728,7 @@ $Global:SyncHash.GPOReport.Add_Click({
 
         $global:compToTest = ''
         $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+                [action]{ $global:compToTest = $Global:SyncHash.compNameTextQA.text}
         )
 
         $global:SyncHash.print("Generating GPO report for $global:compToTest...", $false)
@@ -1000,7 +859,7 @@ $Global:SyncHash.GetTPM.Add_Click({
 
         $global:compToTest = ''
         $syncHash.Window.Dispatcher.invoke(
-                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+                [action]{ $global:compToTest = $Global:SyncHash.compNameTextQA.text}
         )
         try {
             $info = Get-CimInstance -class Win32_Tpm -namespace root\CIMV2\Security\MicrosoftTpm -ComputerName $global:compToTest -erroraction stop
@@ -1010,7 +869,7 @@ $Global:SyncHash.GetTPM.Add_Click({
             $Global:SyncHash.print("----------", $false)
         }
         catch {
-            $Global:SyncHash.print("Something went wrong.", $false)
+            $Global:SyncHash.print(("Something went wrong. Remote PowerShell access may not be configured on {0}." -f $global:compToTest), $false)
         }
     }
     $PStask = [powershell]::Create().AddScript($Code)
@@ -1040,218 +899,207 @@ $Global:SyncHash.GetLastLogonCSV.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
-$Global:SyncHash.Example.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "gettpm-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\Example.ps1"
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
-
 # Clean GPO, Computers and security groups from a selected OU
-$Global:SyncHash.CLEANOU.Add_Click({
-    $code = {
-        . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "cleanou-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        . "${includePath}\GPOMigration.ps1"
+# $Global:SyncHash.CLEANOU.Add_Click({
+#     $code = {
+#         . "${includePath}\global.ps1"
+#         Start-Transcript -Path (Join-Path $Global:logdir "cleanou-$((get-date).ToFileTime())") -IncludeInvocationHeader
+#         . "${includePath}\GPOMigration.ps1"
 
-        # Warn the user that proceeding might result in things being deleted
-        $nestConfirm = PopupBox "This tool will walk you through identifying and deleting assets from an OU that is being retired. Are you sure you want to continue? Doing so may result in objects being deleted." "Prepare OU for Deletion" "yn"
-        if ($nestConfirm -ne 'yes') {
-            exit 5
-        }
+#         # Warn the user that proceeding might result in things being deleted
+#         $nestConfirm = PopupBox "This tool will walk you through identifying and deleting assets from an OU that is being retired. Are you sure you want to continue? Doing so may result in objects being deleted." "Prepare OU for Deletion" "yn"
+#         if ($nestConfirm -ne 'yes') {
+#             exit 5
+#         }
 
-        # Get the OU that the user would like to clean
-        $cleanOU = Choose-ADOrganizationalUnit -HideNewOUFeature
-        if ( $cleanOU -isnot [PSCustomObject]) {
-            $Global:SyncHash.print("Canceled. Exiting.", $false)
-            exit
-        }
-        $Global:SyncHash.print("Starting cleanup tool. Bacjups will be saved to:`n${Global:backupdir}", $false)
+#         # Get the OU that the user would like to clean
+#         $cleanOU = Choose-ADOrganizationalUnit -HideNewOUFeature
+#         if ( $cleanOU -isnot [PSCustomObject]) {
+#             $Global:SyncHash.print("Canceled. Exiting.", $false)
+#             exit
+#         }
+#         $Global:SyncHash.print("Starting cleanup tool. Bacjups will be saved to:`n${Global:backupdir}", $false)
 
-        # Create a list of GPO that are linked here
-        $Global:SyncHash.print("Obtaining list of linked GPO", $false)
-        $GPOList = Get-GPInheritance -Target $cleanOU.DistinguishedName | Select-Object -ExpandProperty 'GPOLinks'
+#         # Create a list of GPO that are linked here
+#         $Global:SyncHash.print("Obtaining list of linked GPO", $false)
+#         $GPOList = Get-GPInheritance -Target $cleanOU.DistinguishedName | Select-Object -ExpandProperty 'GPOLinks'
 
-        # Determine which policies are only linked here
-        $singletons = New-Object -TypeName 'System.Collections.ArrayList'
-        $GPOList | ForEach-Object {
-            $reviewObject = Get-GPO -Guid $_.GpoID
-            $Global:SyncHash.print("Calculating links for $($_.DisplayName)...", $false)
-            if ($reviewObject -is [Microsoft.GroupPolicy.Gpo] ) {
+#         # Determine which policies are only linked here
+#         $singletons = New-Object -TypeName 'System.Collections.ArrayList'
+#         $GPOList | ForEach-Object {
+#             $reviewObject = Get-GPO -Guid $_.GpoID
+#             $Global:SyncHash.print("Calculating links for $($_.DisplayName)...", $false)
+#             if ($reviewObject -is [Microsoft.GroupPolicy.Gpo] ) {
 
-                # Attempt to obtain a report for this object
-                $xmlStuff = ''
-                try {
-                    $xmlStuff = Get-GPOReport -Guid $reviewObject.id -ReportType 'XML'
-                    $xmlStuff = [XML]$xmlStuff
-                } catch {
-                    # Should we ignore, or tell the user?
-                    # I'm going to ignore for now
-                }
+#                 # Attempt to obtain a report for this object
+#                 $xmlStuff = ''
+#                 try {
+#                     $xmlStuff = Get-GPOReport -Guid $reviewObject.id -ReportType 'XML'
+#                     $xmlStuff = [XML]$xmlStuff
+#                 } catch {
+#                     # Should we ignore, or tell the user?
+#                     # I'm going to ignore for now
+#                 }
 
-                if (($xmlStuff -is [XML]) -and
-                    ($xmlStuff.GPO.LinksTo) ) {
-                    $linkCount = $xmlStuff.GPO.LinksTo | Measure-Object | Select-Object -ExpandProperty 'count'
+#                 if (($xmlStuff -is [XML]) -and
+#                     ($xmlStuff.GPO.LinksTo) ) {
+#                     $linkCount = $xmlStuff.GPO.LinksTo | Measure-Object | Select-Object -ExpandProperty 'count'
 
-                    if ($linkCount -lt 2) {
-                        $singletons.add($reviewObject)
-                    }
-                }
-            }
-        }
+#                     if ($linkCount -lt 2) {
+#                         $singletons.add($reviewObject)
+#                     }
+#                 }
+#             }
+#         }
 
-        # Generate a string containing a list of policies that will be unlinked
-        $policyListString = New-Object -TypeName System.Text.StringBuilder
-        if ($GPOList -is [Object[]]) {
-            $GPOList | ForEach-Object {
-                $policyListString.Append($_.DisplayName)
-                $policyListString.Append("`n")
-            }
-        } elseif ($GPOList -is [Microsoft.GroupPolicy.GpoLink]) {
-            $policyListString.Append($GPOList.DisplayName)
-            $policyListString.Append("`n")
-        }
+#         # Generate a string containing a list of policies that will be unlinked
+#         $policyListString = New-Object -TypeName System.Text.StringBuilder
+#         if ($GPOList -is [Object[]]) {
+#             $GPOList | ForEach-Object {
+#                 $policyListString.Append($_.DisplayName)
+#                 $policyListString.Append("`n")
+#             }
+#         } elseif ($GPOList -is [Microsoft.GroupPolicy.GpoLink]) {
+#             $policyListString.Append($GPOList.DisplayName)
+#             $policyListString.Append("`n")
+#         }
 
-        $nestConfirm = PopupBox @"
-The following polices will be unlinked from $($cleanOU.name)
+#         $nestConfirm = PopupBox @"
+# The following polices will be unlinked from $($cleanOU.name)
 
-$($policyListString.toString())
+# $($policyListString.toString())
 
-Select Yes to continue, or No to abort OU cleaning
-"@ "Unlink policies" "yn"
-        if ($nestConfirm -ne 'yes') {
-            exit 6
-        }
+# Select Yes to continue, or No to abort OU cleaning
+# "@ "Unlink policies" "yn"
+#         if ($nestConfirm -ne 'yes') {
+#             exit 6
+#         }
 
-        # Unlink policies
-        $GPOList | ForEach-Object {
-            ########
-            ######## DANGER ZONE! Disabled during testing
-            ########
-            $Global:SyncHash.print("Unlink $($_.GpoId) which has name of $($_.DisplayName) from $($cleanOU.DistinguishedName)", $false)
-            Remove-GPLink -Guid $_.GpoId -Target $cleanOU.DistinguishedName
-        }
+#         # Unlink policies
+#         $GPOList | ForEach-Object {
+#             ########
+#             ######## DANGER ZONE! Disabled during testing
+#             ########
+#             $Global:SyncHash.print("Unlink $($_.GpoId) which has name of $($_.DisplayName) from $($cleanOU.DistinguishedName)", $false)
+#             Remove-GPLink -Guid $_.GpoId -Target $cleanOU.DistinguishedName
+#         }
 
-        # Delete unused policies
-        if ( ($singletons -is [System.Collections.ArrayList]) -and ($singletons.count -gt 0)  ) {
+#         # Delete unused policies
+#         if ( ($singletons -is [System.Collections.ArrayList]) -and ($singletons.count -gt 0)  ) {
 
-            # Create a friendly string with policy names
-            $deleteList = New-Object -TypeName System.Text.StringBuilder
-            $singletons | ForEach-Object {
-                $deleteList.Append($_.DisplayName)
-                $deleteList.Append("`n")
-            }
+#             # Create a friendly string with policy names
+#             $deleteList = New-Object -TypeName System.Text.StringBuilder
+#             $singletons | ForEach-Object {
+#                 $deleteList.Append($_.DisplayName)
+#                 $deleteList.Append("`n")
+#             }
 
-            # Display warning before deleting
-            $nestConfirm = PopupBox @"
-The following policies are no longer linked anywhere in this domain and can be deleted
+#             # Display warning before deleting
+#             $nestConfirm = PopupBox @"
+# The following policies are no longer linked anywhere in this domain and can be deleted
 
-$($policyListString.toString())
+# $($policyListString.toString())
 
-Select Yes to DELETE these policy objects, or No to abort OU cleaning
-"@ "Purge unused policies" "yn"
-            if ($nestConfirm -ne 'yes') {
-                exit 6
-            }
+# Select Yes to DELETE these policy objects, or No to abort OU cleaning
+# "@ "Purge unused policies" "yn"
+#             if ($nestConfirm -ne 'yes') {
+#                 exit 6
+#             }
 
-            # If we have not exited at this point: let's delete everything!
-            $singletons | ForEach-Object {
+#             # If we have not exited at this point: let's delete everything!
+#             $singletons | ForEach-Object {
 
-                ########
-                ######## DANGER ZONE! Disabled during testing
-                ######## TODO: Replace simulation with real thing
-                ########
-                $Global:SyncHash.print("DELETE: $($_.GpoId) which has name of $($_.DisplayName)", $false)
-                Remove-GPO -Guid $_.Id
-            }
-        }
+#                 ########
+#                 ######## DANGER ZONE! Disabled during testing
+#                 ######## TODO: Replace simulation with real thing
+#                 ########
+#                 $Global:SyncHash.print("DELETE: $($_.GpoId) which has name of $($_.DisplayName)", $false)
+#                 Remove-GPO -Guid $_.Id
+#             }
+#         }
 
-        # Search for computers in this OU
-        $Global:SyncHash.print("Searching for computers...", $false)
-        $compsToDelete = Get-ADComputer -SearchBase $cleanOU.DistinguishedName -SearchScope 'onelevel' -Filter '*' -Properties 'name','description'
+#         # Search for computers in this OU
+#         $Global:SyncHash.print("Searching for computers...", $false)
+#         $compsToDelete = Get-ADComputer -SearchBase $cleanOU.DistinguishedName -SearchScope 'onelevel' -Filter '*' -Properties 'name','description'
 
-        # If computers were found, we need to delete them. Ask the user if it is ok to delete these computers
-        if ( ($compsToDelete -is [Object[]]) -and ($compsToDelete.count -gt 0) -and ($compsToDelete[0] -is [Microsoft.ActiveDirectory.Management.ADComputer]) ) {
+#         # If computers were found, we need to delete them. Ask the user if it is ok to delete these computers
+#         if ( ($compsToDelete -is [Object[]]) -and ($compsToDelete.count -gt 0) -and ($compsToDelete[0] -is [Microsoft.ActiveDirectory.Management.ADComputer]) ) {
 
-        # Let the user know we found some comuters and need to delete them
-        $nestConfirm = PopupBox @"
-While examining OU $($cleanOU.name)
-$($compsToDelete.count.toString()) computer objects were found
+#         # Let the user know we found some comuters and need to delete them
+#         $nestConfirm = PopupBox @"
+# While examining OU $($cleanOU.name)
+# $($compsToDelete.count.toString()) computer objects were found
 
-Would you like to delete these computer objects?
-"@ "Delete computer objects" "yn"
-            if ($nestConfirm -ne 'yes') {
-                exit 7
-            }
+# Would you like to delete these computer objects?
+# "@ "Delete computer objects" "yn"
+#             if ($nestConfirm -ne 'yes') {
+#                 exit 7
+#             }
 
-            # Delete them
-            $compsToDelete | ForEach-Object {
+#             # Delete them
+#             $compsToDelete | ForEach-Object {
 
-                ########
-                ######## DANGER ZONE! Disabled during testing
-                ######## TODO: Replace simulation with real thing
-                ########
-                $Global:SyncHash.print("DELETE: $($_.Name)", $false)
-                Remove-ADComputer -ComputerName $_.Name
-            }
-        }
+#                 ########
+#                 ######## DANGER ZONE! Disabled during testing
+#                 ######## TODO: Replace simulation with real thing
+#                 ########
+#                 $Global:SyncHash.print("DELETE: $($_.Name)", $false)
+#                 Remove-ADComputer -ComputerName $_.Name
+#             }
+#         }
 
-        # Search for security groups
-        $Global:SyncHash.print("Searching for groups...", $false)
-        $groupsToDelete = Get-ADGroup -SearchBase $cleanOU.DistinguishedName -SearchScope 'onelevel' -Filter '*' -Properties 'name','description'
+#         # Search for security groups
+#         $Global:SyncHash.print("Searching for groups...", $false)
+#         $groupsToDelete = Get-ADGroup -SearchBase $cleanOU.DistinguishedName -SearchScope 'onelevel' -Filter '*' -Properties 'name','description'
 
-        # Filter out groups created by MSS
-        $groupsToDelete = $groupsToDelete | Where-Object -FilterScript {
-            $_.name -inotmatch '(OUadmins|OUoperators|OUpermit|OUusers)$'
-        }
+#         # Filter out groups created by MSS
+#         $groupsToDelete = $groupsToDelete | Where-Object -FilterScript {
+#             $_.name -inotmatch '(OUadmins|OUoperators|OUpermit|OUusers)$'
+#         }
 
-        # If groups were found, we need to delete them. Ask the user if it is ok to delete these groups
-        if ( ($groupsToDelete -is [Object[]]) -and ($groupsToDelete.count -gt 0) -and ($groupsToDelete[0] -is [Microsoft.ActiveDirectory.Management.ADGroup]) ) {
+#         # If groups were found, we need to delete them. Ask the user if it is ok to delete these groups
+#         if ( ($groupsToDelete -is [Object[]]) -and ($groupsToDelete.count -gt 0) -and ($groupsToDelete[0] -is [Microsoft.ActiveDirectory.Management.ADGroup]) ) {
 
-            # Let the user know we found some groups and need to delete them
-            $nestConfirm = PopupBox @"
-While examining OU $($cleanOU.name)
-$($compsToDelete.count.toString()) group objects were found
+#             # Let the user know we found some groups and need to delete them
+#             $nestConfirm = PopupBox @"
+# While examining OU $($cleanOU.name)
+# $($compsToDelete.count.toString()) group objects were found
 
-Would you like to delete these group objects?
-"@ "Delete group objects" "yn"
-            if ($nestConfirm -ne 'yes') {
-                exit 7
-            }
+# Would you like to delete these group objects?
+# "@ "Delete group objects" "yn"
+#             if ($nestConfirm -ne 'yes') {
+#                 exit 7
+#             }
 
-            # Delete them
-            $groupsToDelete | ForEach-Object {
+#             # Delete them
+#             $groupsToDelete | ForEach-Object {
 
-                # Back up data before deletion
-                $Global:SyncHash.print("BACKUP: group $($_.Name)", $false)
-                $backupLocation = Join-Path $Global:backupdir "$($_.Name).xml"
-                $groupDetails = Get-ADGroup -Identity $_ -Properties "*"
-                $groupDetails | Export-Clixml -Path $backupLocation
+#                 # Back up data before deletion
+#                 $Global:SyncHash.print("BACKUP: group $($_.Name)", $false)
+#                 $backupLocation = Join-Path $Global:backupdir "$($_.Name).xml"
+#                 $groupDetails = Get-ADGroup -Identity $_ -Properties "*"
+#                 $groupDetails | Export-Clixml -Path $backupLocation
 
-                ########
-                ######## DANGER ZONE! Disabled during testing
-                ######## TODO: Replace simulation with real thing
-                ########
-                if (Test-Path =Path $backupLocation) {
-                    $Global:SyncHash.print("DELETE: group $($_.Name)", $false)
-                    Remove-ADGroup -Identity $_
-                } else {
-                    $Global:SyncHash.print("SKIPPING: Backup file not created, the following group WILL NOT be deleted;  $($_.Name)", $false)
-                }
+#                 ########
+#                 ######## DANGER ZONE! Disabled during testing
+#                 ######## TODO: Replace simulation with real thing
+#                 ########
+#                 if (Test-Path =Path $backupLocation) {
+#                     $Global:SyncHash.print("DELETE: group $($_.Name)", $false)
+#                     Remove-ADGroup -Identity $_
+#                 } else {
+#                     $Global:SyncHash.print("SKIPPING: Backup file not created, the following group WILL NOT be deleted;  $($_.Name)", $false)
+#                 }
                 
-            }
-        }
-        $Global:SyncHash.print("Cleaning completed for $($cleanOU.name)", $false)
-        Stop-Transcript
-    }
-    $PStask = [powershell]::Create().AddScript($Code)
-    $PStask.Runspace = $Runspace
-    $myJob = $PStask.BeginInvoke()
-})
+#             }
+#         }
+#         $Global:SyncHash.print("Cleaning completed for $($cleanOU.name)", $false)
+#         Stop-Transcript
+#     }
+#     $PStask = [powershell]::Create().AddScript($Code)
+#     $PStask.Runspace = $Runspace
+#     $myJob = $PStask.BeginInvoke()
+# })
 
 # run Update Computer Description
 $Global:SyncHash.UPCOMP.Add_Click({

@@ -398,15 +398,6 @@ $returnString += "</p><br /><p><b>Legend:</b><br />&nbsp;&nbsp;<b>c</b> = Create
         
         # Generate HTML based on node type
         if ($this.isContainer) {
-
-            if($includeEmpty -eq $false -and $this.accessError -eq $true){
-                # If the "Include Empty" box is not ticked (so exclude empty folders), and there is nothing in the folder: Do nothing for now
-
-                # Unsure if there is a better way for me to skip this check with the provided information. This works, but it may not be the most pretty to have an if statment doing nothing
-            }
-
-            else{
-
                 # Add permissions information to container header
                 if ($null -ne $this.acl) {
 
@@ -483,8 +474,11 @@ ${accessHTML}
                 $folderString += $aclHTML
 
                 if ($this.accessError) {
-                    $folderString += "<div class='warning'><b><u>Warning</u></b>: Empty folder</div>"
-                    $accessHTML = 'empty'
+                    $folderString += "</li>"
+                    $returnString += $folderString
+                    return $returnString
+                    # $folderString += "<div class='warning'><b><u>Warning</u></b>: Empty folder</div>"
+                    # $accessHTML = 'empty'
                 }
                 elseif ( 
                     ($this.children -is [System.Collections.ArrayList]) -and
@@ -507,7 +501,6 @@ ${accessHTML}
                 ) {
                     $returnString += $folderString
                 }
-            }
         }
         else { 
 

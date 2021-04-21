@@ -35,24 +35,30 @@ catch{Write-Host "Unable to load Windows.Markup.XamlReader. Some possible causes
 $xaml.SelectNodes("//*[@Name]") | % {Set-Variable -Name ($_.Name) -Value $Form.FindName($_.Name)}
 
 $rootItem = [Windows.Controls.TreeViewItem]::new()
-$rootItem.header = "Nolan"
+$rootItem.header = "C:"
 $Tree.Items.Add($rootItem) | Out-Null
 
-$rootChildren = Get-ChildItem "C:\Users\nwglenn\"
+$rootChildren = Get-ChildItem "C:\"
 
 function Add-ChildNodes($parentNode, $currentItems) {
     foreach($item in $currentItems) {
         $treeItem = [Windows.Controls.TreeViewItem]::new()
         $treeItem.header = $item.name
         $parentNode.Items.Add($treeItem) | Out-Null
-        if((Get-Item $item.FullName) -is [System.IO.DirectoryInfo]) {
-            $childItems = Get-ChildItem $item.FullName
-            Add-ChildNodes -parentNode $treeItem -currentItems $childItems
+        try {
+            $itemProperties = Get-Item $item.FullName
+            if($itemProperties -is [System.IO.DirectoryInfo]) {
+                $childItems = Get-ChildItem $item.FullName
+                Add-ChildNodes -parentNode $treeItem -currentItems $childItems
+            }
+        }
+        catch {
+            Write-Host "Error encountered."
         }
     }
 }
 
-Add-ChildNodes -parentNode $rootItem -currentItems. $rootChildren
+Add-ChildNodes -parentNode $rootItem -currentItems $rootChildren
 
 $Tree.add_GotFocus({
     $CurrentSelection.Content = $_.OriginalSource.Header
