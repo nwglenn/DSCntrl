@@ -6,7 +6,7 @@ Defines global functions & variables for the DS Scripts
 #>
 
 # script version number
-$globalVersion = "1.3.1"
+$globalVersion = "1.1"
 
 # are we debug testing?
 $globalDebug = $false

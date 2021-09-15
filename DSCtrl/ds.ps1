@@ -10,7 +10,7 @@ provide support to our customers.
 [void][System.Reflection.Assembly]::LoadWithPartialName('Microsoft.VisualBasic')
 
 $WORKING_DIR = split-path $SCRIPT:MyInvocation.MyCommand.Path -parent
-$includes = @("global","DSForm","Invoke-Runas",'ShareReport','PrinterReport','GPOMigration','CreateGroup')
+$includes = @("global","DSForm",'ShareReport','PrinterReport','GPOMigration','CreateGroup')
 
 # itterate through include files and add them and 
 ForEach ($include in $includes) {
