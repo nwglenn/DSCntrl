@@ -15,10 +15,11 @@ xmlns:local="clr-namespace:Deskside_Control_Panel"
 mc:Ignorable="d"
 Title="DSCTRL v1.1" Height="521" Width="621">
     <Grid Height="500">
-        <Menu HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Width="460">
+        <Menu HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Width="613">
             <MenuItem Header="_File">
                 <MenuItem Header="Copy log" Name="CopyLogMenuItem" />
                 <MenuItem Header="_Clear log" Name="ClearMenuItem" />
+                <MenuItem Header="_Search" Name="SearchMenuItem" />
                 <Separator />
                 <MenuItem Header="_Exit" Name="exitMenuItem" />
             </MenuItem>
@@ -38,6 +39,9 @@ Title="DSCTRL v1.1" Height="521" Width="621">
                     <TextBox AcceptsReturn="false" Name="compNameText" Grid.Column="2" HorizontalAlignment="Left" Height="21" Margin="101,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129"/>
                     <Label Content="Computer Name:" Grid.Column="1" HorizontalAlignment="Left" Margin="0,8,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="26" Width="101"/>
                     <Button Content="Get Computer" Height="24" VerticalAlignment="Top" RenderTransformOrigin="0.52,0.548" Name="GetComputer" Grid.ColumnSpan="3" Margin="246,10,264,0"/>
+                    <Button Name="Ping" Content="Ping" Grid.Column="2" HorizontalAlignment="Left" Margin="6,41,0,0" VerticalAlignment="Top" Width="56" Height="24"/>
+                    <Button Name="TestRemote" Content="Test Remote" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="84,41,426,0" RenderTransformOrigin="1.313,0.5"/>
+                    <Button Name="DatabaseBtn" Grid.ColumnSpan="3" Content="Database" HorizontalAlignment="Left" Margin="366,14,0,0" VerticalAlignment="Top" Width="75"/>
                 </Grid>
             </TabItem>
             <TabItem Header="User">
@@ -51,14 +55,40 @@ Title="DSCTRL v1.1" Height="521" Width="621">
             </TabItem>
             <TabItem Header="OU">
                 <Grid Background="#FFE5E5E5">
-                    <Button Name="ProcessingBtn" Content="Perform Processing" HorizontalAlignment="Left" Margin="26,47,0,0" VerticalAlignment="Top" Width="110"/>
-                    <TextBox Name="Num1Box" HorizontalAlignment="Left" Height="23" Margin="20,10,0,0" TextWrapping="Wrap" Text="Num1" VerticalAlignment="Top" Width="51" RenderTransformOrigin="-0.408,0.58"/>
-                    <TextBox Name="Num2Box" HorizontalAlignment="Left" Height="23" Margin="89,10,0,0" TextWrapping="Wrap" Text="Num2" VerticalAlignment="Top" Width="51"/>
-                    <Label Content="+" HorizontalAlignment="Left" Margin="71,7,0,0" VerticalAlignment="Top"/>
+                    <Button Name="OUReportBtn" Content="OU Report" HorizontalAlignment="Left" Margin="28,26,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Testing">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="235*"/>
+                        <ColumnDefinition Width="372*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="AddToGroup" Content="Software Group" HorizontalAlignment="Left" Margin="91,41,0,0" VerticalAlignment="Top" Width="97" Height="20" Grid.Column="1"/>
+                    <Button Name="AddToPrinter" Content="Printer Group" HorizontalAlignment="Left" Margin="7,41,0,0" VerticalAlignment="Top" Width="79" Grid.Column="1" Height="20"/>
+                    <Button Name="GetPrintIP" Content="Printer IP" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="79" Grid.Column="1" Height="21"/>
+                    <Button Name="PSRemote" Content="PSRemote" HorizontalAlignment="Left" Margin="77,41,0,0" VerticalAlignment="Top" Width="63" Height="20"/>
+                    <Button Name="GPOReport" Content="GPO Report" HorizontalAlignment="Left" Margin="2,41,0,0" VerticalAlignment="Top" Width="70" Height="20"/>
+                    <Button Name="CannedPhrases" Content="Standard Email" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" Width="97" Grid.Column="1" Height="21"/>
+                    <Button Name="NumGroups" Content="Count Sec Groups" HorizontalAlignment="Left" Margin="193,10,0,0" VerticalAlignment="Top" Width="103" Grid.Column="1" Height="21"/>
+                    <Button Name="GetTPM" Content="Get TPM" HorizontalAlignment="Left" Margin="145,10,0,0" VerticalAlignment="Top" Width="80" Height="20"/>
+                    <Button Name="GetBitLocker" Content="Get BitLocker" HorizontalAlignment="Left" Margin="145,41,0,0" VerticalAlignment="Top" Width="80" Height="20"/>
+                    <Button Name="GetLastLogonCSV" Content="Last Logon" HorizontalAlignment="Left" Margin="193,41,0,0" VerticalAlignment="Top" Width="103" Grid.Column="1" Height="20"/>
+                    <TextBox Name="compNameTextQA" HorizontalAlignment="Left" Height="19" Margin="2,10,0,0" TextWrapping="Wrap" Text="Computer Name" VerticalAlignment="Top" Width="138"/>
+                    <Separator HorizontalAlignment="Left" Height="19" Margin="201,28,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                        <Separator.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="89.784"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Separator.RenderTransform>
+                    </Separator>
                 </Grid>
             </TabItem>
         </TabControl>
-        <ScrollViewer Name="outputScroller" VerticalAlignment="Bottom" Height="355" CanContentScroll="True" Margin="0,0,0,20">
+        <ScrollViewer Name="outputScroller" VerticalAlignment="Bottom" Height="351" CanContentScroll="True" Margin="0,0,0,15">
             <TextBlock TextWrapping="Wrap" Name="outputText" FontFamily="Courier New" />
         </ScrollViewer>
     </Grid>
@@ -474,10 +504,7 @@ $Global:SyncHash.GetComputer.Add_Click({
 
         $syncHash.Window.Dispatcher.invoke([action]{$global:compToTest = $Global:SyncHash.compNameText.text})
 
-        $syncHash.print(("Computer information for '{0}':" -f $global:compToTest))
-        $syncHash.print("Distinguished Name: Test")
-        $syncHash.print("Enabled: Test")
-        $syncHash.print("Last Logon Date: Test")
+        . "${includePath}\Get-AdComputerPopup.ps1"
         # $syncHash.Window.Dispatcher.invoke([action]{$global:withProps = $Global:SyncHash.WithProperties.ischecked})
 
         # $outputPath = ("{0}\outputs" -f (Split-path ${includePath} -parent))
@@ -510,7 +537,6 @@ $Global:SyncHash.GetComputer.Add_Click({
         #         $Global:syncHash.print($_, $false)
         #     }
         # }
-        $Global:SyncHash.print("-------------------", $false)
     }
     $PStask = [powershell]::Create().AddScript($Code)
     $PStask.Runspace = $Runspace
@@ -528,23 +554,11 @@ $Global:SyncHash.PopoutBtn.Add_Click({
     $myJob = $PStask.BeginInvoke()
 })
 
-$Global:syncHash.ProcessingBtn.Add_Click({
+$Global:SyncHash.OUReportBtn.Add_Click({
     $code = {
         . "${includePath}\global.ps1"
-        Start-Transcript -Path (Join-Path $Global:logdir "addtogroup-$((get-date).ToFileTime())") -IncludeInvocationHeader
-        $syncHash.Window.Dispatcher.invoke([action]{$global:Num1 = $Global:SyncHash.Num1Box.text})
-        $syncHash.Window.Dispatcher.invoke([action]{$global:Num2 = $Global:SyncHash.Num2Box.text})
-        $Global:syncHash.print(("Num 1: {0}" -f $Global:Num1))
-        $Global:syncHash.print(("Num 2: {0}" -f $global:Num2))
-        $sum = [float]$Global:Num1 + [float]$global:Num2
-        if($sum) {
-            $Global:syncHash.print(("Sum: {0}" -f $sum))
-        }
-        else {
-            $Global:syncHash.print("Error: Please input two valid numbers.")
-        }
-        $Global:SyncHash.print("-------------------", $false)
-
+        Start-Transcript -Path (Join-Path $Global:logdir "oureport-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\OUReporting.ps1"
     }
     $PStask = [powershell]::Create().AddScript($Code)
     $PStask.Runspace = $Runspace
@@ -573,63 +587,63 @@ $Global:syncHash.ProcessingBtn.Add_Click({
 #     $myJob = $PStask.BeginInvoke()
 # })
 
-# $Global:SyncHash.GetPrintIP.Add_Click({
-#     $code = {
-#         . "${includePath}\global.ps1"
-#         Start-Transcript -Path (Join-Path $Global:logdir "getprintip-$((get-date).ToFileTime())") -IncludeInvocationHeader
-#         . "${includePath}\GettingPrinterIP.ps1"
-#     }
-#     $PStask = [powershell]::Create().AddScript($Code)
-#     $PStask.Runspace = $Runspace
-#     $myJob = $PStask.BeginInvoke()
-# })
+$Global:SyncHash.GetPrintIP.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "getprintip-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\GettingPrinterIP.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
 
-# $Global:SyncHash.Ping.Add_Click({
-#     $code = {
-#         . "${includePath}\global.ps1"
-#         Start-Transcript -Path (Join-Path $Global:logdir "ping-$((get-date).ToFileTime())") -IncludeInvocationHeader
+$Global:SyncHash.Ping.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "ping-$((get-date).ToFileTime())") -IncludeInvocationHeader
 
-#         $global:compToTest = ''
-#         $syncHash.Window.Dispatcher.invoke(
-#                 [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
-#         )
+        $global:compToTest = ''
+        $syncHash.Window.Dispatcher.invoke(
+                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+        )
 
-#         # Check to see if it's a valid computer name
-#         if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
+        # Check to see if it's a valid computer name
+        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
 
-#             $global:SyncHash.print("Attempting to ping $global:compToTest...", $false)
+            $global:SyncHash.print("Attempting to ping $global:compToTest...", $false)
 
-#             $pingInfo = Test-NetConnection $global:compToTest
+            $pingInfo = Test-NetConnection $global:compToTest
 
-#             if($pingInfo.PingSucceeded) {
-#                 $global:SyncHash.print("Ping result: success", $false)
-#                 $global:SyncHash.print(("IP address: {0}" -f $pingInfo.RemoteAddress.IPAddressToString), $false)
-#                 $global:SyncHash.print(("MS: {0}" -f($pingInfo.PingReplyDetails.RoundTripTime), $false))
+            if($pingInfo.PingSucceeded) {
+                $global:SyncHash.print("Ping result: success", $false)
+                $global:SyncHash.print(("IP address: {0}" -f $pingInfo.RemoteAddress.IPAddressToString), $false)
+                $global:SyncHash.print(("MS: {0}" -f($pingInfo.PingReplyDetails.RoundTripTime), $false))
 
-#                 $FQDN = nslookup $pingInfo.RemoteAddress.IPAddressToString
+                $FQDN = nslookup $pingInfo.RemoteAddress.IPAddressToString
 
-#                 foreach($line in $FQDN) {
-#                     if($line.StartsWith("Name:")) {
-#                         $global:SyncHash.print(("FQDN: {0}" -f ($line -split " ")[4]), $false)
-#                     }
-#                 }
-#             }
-#             else {
-#                 $global:SyncHash.print("Ping not successful", $false)
-#             }
-#         }
-#         else {
-#             # Inform them that it's not a valid name.
-#             $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.`n", $false)
-#         }
+                foreach($line in $FQDN) {
+                    if($line.StartsWith("Name:")) {
+                        $global:SyncHash.print(("FQDN: {0}" -f ($line -split " ")[4]), $false)
+                    }
+                }
+            }
+            else {
+                $global:SyncHash.print("Ping not successful", $false)
+            }
+        }
+        else {
+            # Inform them that it's not a valid name.
+            $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.`n", $false)
+        }
 
-#         $global:SyncHash.print("----------")
+        $global:SyncHash.print("----------")
 
-#     }
-#     $PStask = [powershell]::Create().AddScript($Code)
-#     $PStask.Runspace = $Runspace
-#     $myJob = $PStask.BeginInvoke()
-# })
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
 
 
 # $Global:SyncHash.PSRemote.Add_Click({
@@ -733,59 +747,70 @@ $Global:syncHash.ProcessingBtn.Add_Click({
 #     $myJob = $PStask.BeginInvoke()
 # })
 
-# $Global:SyncHash.NumGroups.Add_Click({
-#     $code = {
-#         . "${includePath}\global.ps1"
-#         Start-Transcript -Path (Join-Path $Global:logdir "numgroups-$((get-date).ToFileTime())") -IncludeInvocationHeader
-#         . "${includePath}\NumGroups.ps1"
-#     }
-#     $PStask = [powershell]::Create().AddScript($Code)
-#     $PStask.Runspace = $Runspace
-#     $myJob = $PStask.BeginInvoke()
-# })
+$Global:SyncHash.NumGroups.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "numgroups-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\NumGroups.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
 
-# $Global:SyncHash.TestRemote.Add_Click({
-#     $code = {
-#         . "${includePath}\global.ps1"
-#         Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
+$Global:SyncHash.DatabaseBtn.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "numgroups-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\TestingDB.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
 
-#         $global:compToTest = ''
-#         $syncHash.Window.Dispatcher.invoke(
-#                 [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
-#         )
+$Global:SyncHash.TestRemote.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "cannedphrases-$((get-date).ToFileTime())") -IncludeInvocationHeader
 
-#         # Check to see if it's a valid computer name
-#         if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
-#             $Global:SyncHash.print(("Testing {0} for remote access, this may take a few moments..." -f $global:compToTest), $false)
+        $global:compToTest = ''
+        $syncHash.Window.Dispatcher.invoke(
+                [action]{ $global:compToTest = $Global:SyncHash.compNameText.text}
+        )
 
-#             $pingInfo = Test-NetConnection $global:compToTest
+        # Check to see if it's a valid computer name
+        if ( (GlobalVarValidate $global:compToTest '^([\w\.-])+$')  ) {
+            $Global:SyncHash.print(("Testing {0} for remote access, this may take a few moments..." -f $global:compToTest), $false)
 
-#             if($pingInfo.PingSucceeded) {
-#                 try {
-#                     $session = New-PSSession $global:compToTest 
-#                     if($session.state -eq "Opened") {
-#                         Remove-PSSession $session
-#                     }
-#                     $Global:SyncHash.print(("{0} is available and able to be remoted into." -f $global:compToTest), $false)
-#                 }
-#                 catch {
-#                     $Global:SyncHash.print(("{0} is available but could not be remoted into." -f $global:compToTest), $false)
-#                 }
-#             }
-#             else {
-#                 $Global:SyncHash.print(("{0} could not be reached, it may be turned off or is not on the network." -f $global:compToTest), $false)
-#             }
-#         }
-#         else {
-#             # Inform them that it's not a valid name.
-#             $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.", $false)
-#         }
-#         $Global:SyncHash.print("----------", $false)
-#     }
-#     $PStask = [powershell]::Create().AddScript($Code)
-#     $PStask.Runspace = $Runspace
-#     $myJob = $PStask.BeginInvoke()
-# })
+            $pingInfo = Test-NetConnection $global:compToTest
+
+            if($pingInfo.PingSucceeded) {
+                try {
+                    $session = New-PSSession $global:compToTest 
+                    if($session.state -eq "Opened") {
+                        Remove-PSSession $session
+                    }
+                    $Global:SyncHash.print(("{0} is available and able to be remoted into." -f $global:compToTest), $false)
+                }
+                catch {
+                    $Global:SyncHash.print(("{0} is available but could not be remoted into." -f $global:compToTest), $false)
+                }
+            }
+            else {
+                $Global:SyncHash.print(("{0} could not be reached, it may be turned off or is not on the network." -f $global:compToTest), $false)
+            }
+        }
+        else {
+            # Inform them that it's not a valid name.
+            $Global:SyncHash.print("$($global:compToTest) is not a valid computer name.", $false)
+        }
+        $Global:SyncHash.print("----------", $false)
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
+})
 
 # $Global:SyncHash.GetTPM.Add_Click({
 #     $code = {
@@ -1450,6 +1475,17 @@ $global:SyncHash.exitMenuItem.Add_Click({
     $Global:SyncHash.print("Exiting...", $false)
     $SyncHash.Window.Close()
     exit
+})
+
+$Global:SyncHash.SearchMenuItem.Add_Click({
+    $code = {
+        . "${includePath}\global.ps1"
+        Start-Transcript -Path (Join-Path $Global:logdir "search-$((get-date).ToFileTime())") -IncludeInvocationHeader
+        . "${includePath}\SearchFunction.ps1"
+    }
+    $PStask = [powershell]::Create().AddScript($Code)
+    $PStask.Runspace = $Runspace
+    $myJob = $PStask.BeginInvoke()
 })
 
 # $global:SyncHash.kbADSTD.Add_Click({
