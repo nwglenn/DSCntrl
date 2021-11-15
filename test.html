@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  body {
+    margin: 50px;
+    font-family: Arial;
+  }
+    ul {
+    margin: 0px 0px 0px 20px;
+    list-style: none;
+    line-height: 2em;
+    font-family: Arial;
+  }
+  ul li {
+    font-size: 16px;
+    position: relative;
+  }
+  ul li:before {
+    position: absolute;
+    left: -15px;
+    top: 0px;
+    content: '';
+    display: block;
+    border-left: 1px solid #ddd;
+    height: 1em;
+    border-bottom: 1px solid #ddd;
+    width: 10px;
+  }
+  ul li:after {
+    position: absolute;
+    left: -15px;
+    bottom: -7px;
+    content: '';
+    display: block;
+    border-left: 1px solid #ddd;
+    height: 100%;
+  }
+  ul li.root {
+    margin: 0px 0px 0px -20px;
+  }
+  ul li.root:before {
+    display: none;
+  }
+  ul li.root:after {
+    display: none;
+  }
+  ul li:last-child:after {
+    display: none;
+  }
+  div.security {
+    background-color: #d6d6c2;
+    margin-left: 5px;
+    padding: 10px;
+  }
+  div.warning {
+    background-color: #b3ecff;
+    margin-left: 5px;
+    padding: 10px;
+  }
+  div.error {
+    background-color: #ffcccc;
+    margin-left: 5px;
+    padding: 10px;
+  }
+</style>
+</head>
+<body>
+<h1>Filesystem Report (11/14/2021 10:11:57)</h1>
+<p>\\eoss.dos.fsx.asu.edu\share\Poly\EOSO\Fiscal Ops\Financial\FY2022 Documents\Attendance Sheets</p>
+<br />
+<p><b>Search Settings:</b></p>
+<p> &nbsp;&nbsp;Folders only</p><br /><p><b>Legend:</b><br />&nbsp;&nbsp;<b>c</b> = Created<br />&nbsp;&nbsp;<b>a</b> = Accessed<br />&nbsp;&nbsp;<b>m</b> = Modified<br />&nbsp;&nbsp;<b>sz</b> = Size</p><br /><ul><li class="root">&#128194;<b>Attendance Sheets</b> <font color='#808080'>[c:10/01/2021 23:26:20] [m:10/29/2021 11:57:06] [a:10/29/2021 11:57:06] [sz:14 MB]</font></li><li></ul></body></html>
